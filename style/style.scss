@@ -1,4 +1,4 @@
-@import url('https://fonts.googleapis.com/css2?family=Poppins&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Poppins&family=Ubuntu&display=swap');
 
 * {
     margin: 0;
@@ -6,8 +6,15 @@
     box-sizing: border-box;
 }
 
+@mixin responsive {
+    @media screen and (max-width:768px) {
+        @content;
+    }
+
+}
+
 body {
-    font-family: 'Poppins', sans-serif;
+
     width: 100%;
     height: 100vh;
 
@@ -27,41 +34,68 @@ body {
             justify-content: space-around;
             flex-direction: column;
 
+            @include responsive() {
+                display: none;
+            }
+
             h1 {
+                font-family: 'Ubuntu', sans-serif;
 
-                font-size: 40px;
+                font-size: 35px;
+                color: green;
 
-                .name {
+
+
+                span {
                     color: #ff4242;
                 }
             }
 
-            button {
-                width: 150px;
-                height: 40px;
-                background-color: #ff4242;
-                border: none;
-                font-size: 1.2em;
-                color: rgb(225, 239, 255);
-                cursor: pointer;
-                outline: none;
-                -webkit-tap-highlight-color: transparent;
-                transition: .1s ease-out;
-
-                &:hover {
-                    transform: scale(1.05);
-                    box-shadow: 2px 2px 4px rgba($color: #000000, $alpha: .2);
-                }
-
-                &:active {
-                    box-shadow: none;
-                    transform: scale(1);
-                }
+            .filename {
+                color: black;
             }
+
+            .child {
+                transform: translateX(50px);
+            }
+
+
+
 
         }
 
+        .primary-mobile {
+            display: none;
+
+            @include responsive() {
+                display: flex;
+                justify-content: space-around;
+                align-items: left;
+                height: 30%;
+                flex-direction: column;
+                font-family: 'Ubuntu', sans-serif;
+
+
+                h2 {
+                    font-size: 25px;
+
+                    .key {
+                        color: #ff4242;
+                    }
+
+                    .value {
+                        color: green;
+                    }
+                }
+
+            }
+        }
+
         .secondary {
+            @include responsive() {
+                display: none;
+            }
+
             height: 50%;
 
             img {

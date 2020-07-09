@@ -1,4 +1,4 @@
-@import url("https://fonts.googleapis.com/css2?family=Poppins&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Poppins&family=Ubuntu&display=swap");
 * {
   margin: 0;
   padding: 0;
@@ -7,7 +7,6 @@
 }
 
 body {
-  font-family: 'Poppins', sans-serif;
   width: 100%;
   height: 100vh;
   background-color: #e1efff;
@@ -40,44 +39,71 @@ body section .primary {
           flex-direction: column;
 }
 
-body section .primary h1 {
-  font-size: 40px;
+@media screen and (max-width: 768px) {
+  body section .primary {
+    display: none;
+  }
 }
 
-body section .primary h1 .name {
+body section .primary h1 {
+  font-family: 'Ubuntu', sans-serif;
+  font-size: 35px;
+  color: green;
+}
+
+body section .primary h1 span {
   color: #ff4242;
 }
 
-body section .primary button {
-  width: 150px;
-  height: 40px;
-  background-color: #ff4242;
-  border: none;
-  font-size: 1.2em;
-  color: #e1efff;
-  cursor: pointer;
-  outline: none;
-  -webkit-tap-highlight-color: transparent;
-  -webkit-transition: .1s ease-out;
-  transition: .1s ease-out;
+body section .primary .filename {
+  color: black;
 }
 
-body section .primary button:hover {
-  -webkit-transform: scale(1.05);
-          transform: scale(1.05);
-  -webkit-box-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2);
-          box-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2);
+body section .primary .child {
+  -webkit-transform: translateX(50px);
+          transform: translateX(50px);
 }
 
-body section .primary button:active {
-  -webkit-box-shadow: none;
-          box-shadow: none;
-  -webkit-transform: scale(1);
-          transform: scale(1);
+body section .primary-mobile {
+  display: none;
+}
+
+@media screen and (max-width: 768px) {
+  body section .primary-mobile {
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+    -ms-flex-pack: distribute;
+        justify-content: space-around;
+    -webkit-box-align: left;
+        -ms-flex-align: left;
+            align-items: left;
+    height: 30%;
+    -webkit-box-orient: vertical;
+    -webkit-box-direction: normal;
+        -ms-flex-direction: column;
+            flex-direction: column;
+    font-family: 'Ubuntu', sans-serif;
+  }
+  body section .primary-mobile h2 {
+    font-size: 25px;
+  }
+  body section .primary-mobile h2 .key {
+    color: #ff4242;
+  }
+  body section .primary-mobile h2 .value {
+    color: green;
+  }
 }
 
 body section .secondary {
   height: 50%;
+}
+
+@media screen and (max-width: 768px) {
+  body section .secondary {
+    display: none;
+  }
 }
 
 body section .secondary img {
