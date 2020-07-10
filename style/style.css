@@ -1,4 +1,4 @@
-@import url("https://fonts.googleapis.com/css2?family=Poppins&family=Ubuntu&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Monda&display=swap");
 * {
   margin: 0;
   padding: 0;
@@ -9,10 +9,16 @@
 body {
   width: 100%;
   height: 100vh;
-  background-color: #e1efff;
+  font-family: "Monda", sans-serif;
 }
 
 body section {
+  width: 100%;
+  height: 100%;
+}
+
+body section .landing {
+  margin: auto;
   width: 100%;
   height: 90%;
   display: -webkit-box;
@@ -23,91 +29,128 @@ body section {
   -webkit-box-align: center;
       -ms-flex-align: center;
           align-items: center;
+  background-color: white;
+}
+
+body section .landing .primary {
+  width: 100%;
+  height: 100%;
+  position: relative;
+}
+
+body section .landing .primary .greeting {
+  width: 60%;
+  position: absolute;
+  top: 50%;
+  left: 60%;
+  background-color: white;
+  -webkit-transform: translate(-50%, -50%);
+          transform: translate(-50%, -50%);
+}
+
+body section .landing .primary .greeting::after {
+  width: 100%;
+  height: 100%;
+  content: "Hello";
+  position: absolute;
+  font-size: 250px;
+  color: white;
+  text-shadow: 5px 5px 25px #c4c4c4, -5px -5px 25px #ffffff;
+  z-index: -2;
+  top: -300px;
+}
+
+body section .landing .primary .greeting h1 {
+  font-size: 60px;
+}
+
+body section .landing .primary .greeting h2 {
+  font-size: 40px;
+}
+
+body section .landing .primary .greeting h2 .name {
+  color: #262aff;
+}
+
+body section .landing .secondary {
+  margin-right: auto;
+  width: 70%;
+  z-index: 2;
+}
+
+body section .landing .secondary img {
+  width: 400px;
+}
+
+body main {
+  width: 80%;
+  height: 100%;
+  margin: auto;
+}
+
+body main .about {
+  height: 60%;
+  width: 100%;
+  border-radius: 35px;
+  background: #ffffff;
+  -webkit-box-shadow: 5px 5px 25px #c4c4c4, -5px -5px 25px #ffffff;
+          box-shadow: 5px 5px 25px #c4c4c4, -5px -5px 25px #ffffff;
   padding: 20px 100px;
 }
 
-body section .primary {
-  height: 30%;
+body main .about h1 {
+  text-align: center;
+  font-size: 50px;
+  margin-bottom: 100px;
+}
+
+body main .about p {
+  -ms-grid-column-align: center;
+      justify-self: center;
+  font-size: 20px;
+}
+
+body main .skills {
+  height: 70%;
+}
+
+body main .skills h1 {
+  text-align: center;
+  font-size: 50px;
+  margin-bottom: 100px;
+}
+
+body main .skills .skill-items {
+  width: 100%;
+  height: 70%;
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
   -ms-flex-pack: distribute;
       justify-content: space-around;
-  -webkit-box-orient: vertical;
-  -webkit-box-direction: normal;
-      -ms-flex-direction: column;
-          flex-direction: column;
+  -webkit-box-align: top;
+      -ms-flex-align: top;
+          align-items: top;
 }
 
-@media screen and (max-width: 768px) {
-  body section .primary {
-    display: none;
-  }
+body main .skills .skill-items h2 {
+  text-align: center;
+  font-size: 30px;
+  margin-bottom: 30px;
 }
 
-body section .primary h1 {
-  font-family: 'Ubuntu', sans-serif;
-  font-size: 35px;
-  color: green;
+body main .skills .skill-items .items {
+  display: -ms-grid;
+  display: grid;
+  -ms-grid-columns: 100px 100px;
+      grid-template-columns: 100px 100px;
+  grid-gap: 20px;
 }
 
-body section .primary h1 span {
-  color: #ff4242;
-}
-
-body section .primary .filename {
-  color: black;
-}
-
-body section .primary .child {
-  -webkit-transform: translateX(50px);
-          transform: translateX(50px);
-}
-
-body section .primary-mobile {
-  display: none;
-}
-
-@media screen and (max-width: 768px) {
-  body section .primary-mobile {
-    display: -webkit-box;
-    display: -ms-flexbox;
-    display: flex;
-    -ms-flex-pack: distribute;
-        justify-content: space-around;
-    -webkit-box-align: left;
-        -ms-flex-align: left;
-            align-items: left;
-    height: 30%;
-    -webkit-box-orient: vertical;
-    -webkit-box-direction: normal;
-        -ms-flex-direction: column;
-            flex-direction: column;
-    font-family: 'Ubuntu', sans-serif;
-  }
-  body section .primary-mobile h2 {
-    font-size: 25px;
-  }
-  body section .primary-mobile h2 .key {
-    color: #ff4242;
-  }
-  body section .primary-mobile h2 .value {
-    color: green;
-  }
-}
-
-body section .secondary {
-  height: 50%;
-}
-
-@media screen and (max-width: 768px) {
-  body section .secondary {
-    display: none;
-  }
-}
-
-body section .secondary img {
-  padding: 0;
-  width: 700px;
+body main .skills .skill-items .items p {
+  text-align: center;
+  border: 2px solid black;
+  border-radius: 10px;
+  padding: 10px 7px;
 }
 /*# sourceMappingURL=style.css.map */
