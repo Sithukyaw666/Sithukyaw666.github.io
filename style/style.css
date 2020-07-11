@@ -48,18 +48,6 @@ body section .landing .primary .greeting {
           transform: translate(-50%, -50%);
 }
 
-body section .landing .primary .greeting::after {
-  width: 100%;
-  height: 100%;
-  content: "Hello";
-  position: absolute;
-  font-size: 250px;
-  color: white;
-  text-shadow: 5px 5px 25px #c4c4c4, -5px -5px 25px #ffffff;
-  z-index: -2;
-  top: -300px;
-}
-
 body section .landing .primary .greeting h1 {
   font-size: 60px;
 }
@@ -86,16 +74,27 @@ body main {
   width: 80%;
   height: 100%;
   margin: auto;
+  position: relative;
 }
 
 body main .about {
   height: 60%;
   width: 100%;
   border-radius: 35px;
-  background: #ffffff;
   -webkit-box-shadow: 5px 5px 25px #c4c4c4, -5px -5px 25px #ffffff;
           box-shadow: 5px 5px 25px #c4c4c4, -5px -5px 25px #ffffff;
   padding: 20px 100px;
+}
+
+body main .about::before {
+  content: "";
+  text-transform: uppercase;
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  left: 0;
+  top: 0;
+  z-index: -1;
 }
 
 body main .about h1 {
@@ -152,5 +151,9 @@ body main .skills .skill-items .items p {
   border: 2px solid black;
   border-radius: 10px;
   padding: 10px 7px;
+}
+
+body main .skills .skill-items .items p span {
+  color: #0059ff;
 }
 /*# sourceMappingURL=style.css.map */

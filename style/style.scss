@@ -33,17 +33,7 @@ body {
           left: 60%;
           background-color: rgb(255, 255, 255);
           transform: translate(-50%, -50%);
-          &::after {
-            width: 100%;
-            height: 100%;
-            content: "Hello";
-            position: absolute;
-            font-size: 250px;
-            color: rgb(255, 255, 255);
-            text-shadow: 5px 5px 25px #c4c4c4, -5px -5px 25px #ffffff;
-            z-index: -2;
-            top: -300px;
-          }
+
           h1 {
             font-size: 60px;
           }
@@ -69,13 +59,26 @@ body {
     width: 80%;
     height: 100%;
     margin: auto;
+    position: relative;
     .about {
       height: 60%;
       width: 100%;
       border-radius: 35px;
-      background: #ffffff;
+
       box-shadow: 5px 5px 25px #c4c4c4, -5px -5px 25px #ffffff;
       padding: 20px 100px;
+      &::before {
+        content: "";
+        text-transform: uppercase;
+        position: absolute;
+        width: 100%;
+        height: 100%;
+
+        left: 0;
+        top: 0;
+
+        z-index: -1;
+      }
       h1 {
         text-align: center;
         font-size: 50px;
@@ -113,6 +116,9 @@ body {
             border: 2px solid black;
             border-radius: 10px;
             padding: 10px 7px;
+            span {
+              color: rgb(0, 89, 255);
+            }
           }
         }
       }
