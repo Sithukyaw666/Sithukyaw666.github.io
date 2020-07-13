@@ -228,9 +228,9 @@ body main .skills .skill-items .items {
 }
 
 body main .skills .skill-items .items p {
-  text-align: center;
-  border: 2px solid black;
-  border-radius: 10px;
+  text-align: left;
+  border-left: 6px solid #4043ff;
+  border-radius: 6px;
   padding: 10px 7px;
 }
 
