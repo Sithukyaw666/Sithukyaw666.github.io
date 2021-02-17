@@ -1,0 +1,326 @@
+@import url("https://fonts.googleapis.com/css2?family=Poppins&display=swap");
+* {
+  margin: 0;
+  padding: 0;
+  -webkit-box-sizing: border-box;
+          box-sizing: border-box;
+}
+
+/* width */
+::-webkit-scrollbar {
+  width: 8px;
+}
+
+/* Track */
+::-webkit-scrollbar-track {
+  background: #2703a6;
+}
+
+/* Handle */
+::-webkit-scrollbar-thumb {
+  background: #f2b705;
+}
+
+/* Handle on hover */
+::-webkit-scrollbar-thumb:hover {
+  background: #f29f05;
+}
+
+html {
+  scroll-behavior: smooth;
+  cursor: -webkit-grabbing;
+  cursor: grabbing;
+}
+
+body {
+  width: 100%;
+  background-color: #141259;
+  font-family: "Poppins", sans-serif;
+  -webkit-transition: 0.2s ease-in-out;
+  transition: 0.2s ease-in-out;
+}
+
+body header {
+  position: -webkit-sticky;
+  position: sticky;
+  width: 100%;
+  height: 8vh;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -ms-flex-pack: distribute;
+      justify-content: space-around;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+}
+
+body header .navlinks {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: justify;
+      -ms-flex-pack: justify;
+          justify-content: space-between;
+  width: 40%;
+  list-style: none;
+  color: white;
+}
+
+body header .navlinks li {
+  padding: 4px 20px;
+  -webkit-transition: 0.2s;
+  transition: 0.2s;
+  cursor: pointer;
+}
+
+body header .navlinks li a {
+  text-decoration: none;
+  color: white;
+}
+
+body header .navlinks li:hover {
+  background-color: #f2b705;
+  -webkit-transform: translateY(-4px);
+          transform: translateY(-4px);
+  color: #2703a6;
+  -webkit-box-shadow: -5px 5px white;
+          box-shadow: -5px 5px white;
+}
+
+body header .navlinks li:active {
+  -webkit-transform: translateY(0);
+          transform: translateY(0);
+  -webkit-box-shadow: none;
+          box-shadow: none;
+}
+
+@media screen and (max-width: 780px) {
+  body header .navlinks {
+    display: none;
+  }
+}
+
+body main {
+  width: 100%;
+}
+
+body main section {
+  position: relative;
+}
+
+body main section .landing {
+  position: relative;
+  width: 100%;
+  height: 700px;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  padding: 0 12%;
+}
+
+@media screen and (max-width: 780px) {
+  body main section .landing {
+    -webkit-box-orient: vertical;
+    -webkit-box-direction: normal;
+        -ms-flex-direction: column;
+            flex-direction: column;
+    padding: 0 5%;
+    margin-bottom: 30px;
+    height: 500px;
+    -webkit-box-align: start;
+        -ms-flex-align: start;
+            align-items: flex-start;
+  }
+}
+
+body main section .landing .text {
+  z-index: 1;
+  position: absolute;
+  line-height: 30px;
+  left: 12%;
+}
+
+@media screen and (max-width: 780px) {
+  body main section .landing .text {
+    position: relative;
+    left: 0;
+  }
+}
+
+body main section .landing .text h1 {
+  margin-bottom: 50px;
+  font-size: 4em;
+  color: white;
+  letter-spacing: 5px;
+}
+
+@media screen and (max-width: 780px) {
+  body main section .landing .text h1 {
+    font-size: 2em;
+    margin-bottom: 20px;
+  }
+}
+
+body main section .landing .text p {
+  font-size: 1.3em;
+  color: white;
+  font-weight: 400;
+}
+
+body main section .landing .image {
+  -webkit-clip-path: polygon(20% 0, 100% 0, 100% 100%, 0% 100%);
+          clip-path: polygon(20% 0, 100% 0, 100% 100%, 0% 100%);
+  position: absolute;
+  right: 10%;
+  width: 60%;
+  height: 600px;
+  background-color: #f2b705;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+}
+
+@media screen and (max-width: 780px) {
+  body main section .landing .image {
+    position: relative;
+    -webkit-clip-path: none;
+            clip-path: none;
+    width: 100%;
+    height: 70%;
+    right: 0;
+    margin-top: 30px;
+  }
+}
+
+body main section .landing .image img {
+  width: 70%;
+}
+
+body main section .about {
+  -webkit-clip-path: polygon(0 15%, 100% 0, 100% 100%, 0% 100%);
+          clip-path: polygon(0 15%, 100% 0, 100% 100%, 0% 100%);
+  width: 100%;
+  height: 400px;
+  margin: auto;
+  background-color: white;
+  padding: 100px 12%;
+  z-index: 2;
+}
+
+@media screen and (max-width: 780px) {
+  body main section .about {
+    -webkit-clip-path: none;
+            clip-path: none;
+    padding: 50px 8%;
+  }
+}
+
+body main section .about div {
+  width: 300px;
+  -webkit-clip-path: polygon(0 0, 90% 0, 100% 100%, 0% 100%);
+          clip-path: polygon(0 0, 90% 0, 100% 100%, 0% 100%);
+  background-color: #141259;
+}
+
+@media screen and (max-width: 780px) {
+  body main section .about div {
+    width: 160px;
+  }
+}
+
+body main section .about h1 {
+  z-index: 1;
+  width: 100%;
+  text-align: left;
+  font-weight: 700;
+  font-size: 3em;
+  padding: 0px 14px;
+  color: white;
+}
+
+@media screen and (max-width: 780px) {
+  body main section .about h1 {
+    font-size: 1.5em;
+  }
+}
+
+body main section .about p {
+  color: #141259;
+  font-size: 1.2em;
+  padding-top: 40px;
+  line-height: 30px;
+}
+
+@media screen and (max-width: 780px) {
+  body main section .about p {
+    font-size: 1em;
+  }
+}
+
+body main section .contact {
+  width: 100%;
+  height: 300px;
+  padding: 40px 12%;
+}
+
+@media screen and (max-width: 780px) {
+  body main section .contact {
+    padding: 40px 8%;
+    height: 250px;
+  }
+}
+
+body main section .contact h1 {
+  color: white;
+  font-size: 3em;
+  padding-bottom: 20px;
+}
+
+@media screen and (max-width: 780px) {
+  body main section .contact h1 {
+    font-size: 1.5em;
+  }
+}
+
+body main section .contact p {
+  font-size: 1.2em;
+  color: white;
+  padding: 6px 0;
+}
+
+body main section .contact p a {
+  text-decoration: none;
+  color: #f2b705;
+}
+
+@media screen and (max-width: 780px) {
+  body main section .contact p {
+    font-size: 1em;
+  }
+}
+
+body main footer {
+  height: 5vh;
+}
+
+body main footer p {
+  color: white;
+  text-align: center;
+}
+
+@media screen and (max-width: 780px) {
+  body main footer p {
+    font-size: 0.7em;
+  }
+}
+/*# sourceMappingURL=style.css.map */

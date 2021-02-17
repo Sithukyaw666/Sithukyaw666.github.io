@@ -1,61 +1,65 @@
 <!DOCTYPE html>
 <html lang="en">
-
-<head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <link rel="stylesheet" href="./style/style.css" />
-  <title>Me</title>
-</head>
-
-<body>
-  <section>
-    <div class="landing">
-      <div class="primary">
-        <div class="greeting">
-          <h1>Hola,</h1>
-          <h2>I'm <span class="name">Sithu Kyaw</span></h2>
-        </div>
-      </div>
-      <div class="secondary">
-        <img src="./img/profile.svg" alt="me" srcset="" />
-      </div>
-    </div>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <link rel="stylesheet" href="./style.css" />
+  </head>
+  <body>
+    <header>
+      <h1 class="logo"></h1>
+      <ul class="navlinks">
+        <li><a href="#landing">Home</a></li>
+        <li><a href="#about">About</a></li>
+        <li><a href="#contact">Contact</a></li>
+      </ul>
+    </header>
     <main>
-      <div class="about">
-        <h1>About Me</h1>
-        <p>
-          My name is Sithu Kyaw, student at University of Information
-          Technology.<br />
-          I love web developement and containerization technology. I am
-          currently working with nodejs, react, docker and kubernetes....
-        </p>
-      </div>
-      <div class="skills">
-        <h1>Skills</h1>
-        <div class="skill-items">
-          <div class="dev">
-            <h2>Dev</h2>
-            <div class="items">
-
-              <p>MERN</p>
-              <p>python</p>
-              <p>git</p>
-            </div>
+      <section>
+        <div class="landing" id="landing">
+          <div class="text">
+            <h1>Hello,</h1>
+            <h1>I'm <span>Sithu Kyaw</span></h1>
+            <p>Professional Trash</p>
           </div>
-          <hr>
-          <div class="ops">
-            <h2>Ops</h2>
-            <div class="items">
-              <p>docker</p>
-              <p>kubernetes</p>
-              <p>GCP <span>basic</span></p>
-            </div>
+          <div class="image">
+            <img src="./profile.svg" alt="" />
           </div>
         </div>
-      </div>
+        <div class="about" id="about">
+          <div><h1>Who am I?</h1></div>
+          <p>
+            My name is Sithu Kyaw, Student at University of Information
+            Techonology
+            <br />
+            Useless douchebag and brainless twat
+            <br />
+            Introvert and non existence piece of shit
+          </p>
+          <!-- <button>Download my CV</button> -->
+        </div>
+        <div class="contact" id="contact">
+          <h1>Contact Me</h1>
+          <p>I'm always ready for nothing</p>
+          <p>
+            Please contact me via
+            <a href="mailto:sithukyaw27500@gmail.com"
+              >sithukyaw27500@gmail.com</a
+            >
+          </p>
+        </div>
+        <footer>
+          <p class="year">&copy; Sithu Kyaw |</p>
+        </footer>
+      </section>
+      <script>
+        const date = new Date();
+        const year = date.getFullYear();
+        const p = document.querySelector(".year");
+        p.innerText += " " + year;
+      </script>
     </main>
-  </section>
-</body>
-
+    <!-- <footer></footer> -->
+  </body>
 </html>
