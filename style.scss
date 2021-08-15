@@ -102,11 +102,9 @@ body {
 
         padding: 0 12%;
         @include mobile() {
-          flex-direction: column;
           padding: 0 5%;
           margin-bottom: 30px;
           height: 500px;
-          align-items: flex-start;
         }
         .text {
           z-index: 1;
@@ -120,41 +118,25 @@ body {
           }
           h1 {
             margin-bottom: 50px;
-            font-size: 4em;
+            line-height: 5rem;
+            font-size: 7rem;
             color: white;
             letter-spacing: 5px;
             @include mobile() {
+              line-height: 2rem;
               font-size: 2em;
               margin-bottom: 20px;
             }
           }
           p {
             font-size: 1.3em;
-
+            span {
+              font-weight: 700;
+              color: $background;
+            }
             color: white;
-            font-weight: 400;
-          }
-        }
-        .image {
-          clip-path: polygon(20% 0, 100% 0, 100% 100%, 0% 100%);
-          position: absolute;
-          right: 10%;
-          width: 60%;
-          height: 600px;
-          background-color: $background;
-          display: flex;
-          justify-content: center;
-          align-items: center;
-          @include mobile() {
-            position: relative;
-            clip-path: none;
-            width: 100%;
-            height: 70%;
-            right: 0;
-            margin-top: 30px;
-          }
-          img {
-            width: 70%;
+            letter-spacing: 1px;
+            font-weight: 500;
           }
         }
       }
@@ -197,39 +179,16 @@ body {
           color: $secondary;
           font-size: 1.2em;
           padding-top: 40px;
-          line-height: 30px;
+          line-height: 2rem;
+          span {
+            letter-spacing: 1px;
+            font-weight: 900;
+            color: $primary;
+          }
           @include mobile() {
             font-size: 1em;
           }
         }
-        // button {
-        //   margin: 20px 0;
-        //   width: 170px;
-        //   height: 40px;
-        //   background-color: transparent;
-        //   border: 3px solid $secondary;
-        //   outline: none;
-        //   cursor: pointer;
-        //   transition: 0.2s;
-        //   font-size: 1em;
-        //   text-transform: capitalize;
-        //   font-weight: 600;
-        //   color: $secondary;
-        //   &:hover {
-        //     transform: translateY(-4px);
-        //     box-shadow: -4px 4px rgba($color: $secondary, $alpha: 1);
-        //   }
-        //   &:active {
-        //     transform: translateY(0);
-        //     box-shadow: none;
-        //   }
-        //   @include mobile() {
-        //     box-shadow: -4px 4px rgba($color: $secondary, $alpha: 1);
-        //     &:hover {
-        //       transform: translateY(0);
-        //     }
-        //   }
-        // }
       }
       .contact {
         width: 100%;
@@ -259,45 +218,19 @@ body {
             font-size: 1em;
           }
         }
+        .opt-container {
+          .options {
+            display: flex;
+            justify-content: space-between;
+            p {
+              font-size: 1rem;
+            }
+          }
+          @include mobile() {
+            width: 100%;
+          }
+        }
       }
-      // .projects {
-      //   position: relative;
-      //   width: 100%;
-      //   height: 800px;
-      //   padding: 50px 100px;
-      //   display: flex;
-      //   justify-content: space-around;
-      //   align-items: center;
-      //   h1 {
-      //     color: white;
-      //     font-size: 2em;
-      //     border-bottom: 5px solid $background;
-      //   }
-      //   div {
-      //     width: 300px;
-      //     height: 400px;
-      //     background-color: $background;
-      //     z-index: 1;
-      //     border-radius: 5%;
-      //     h1 {
-      //       text-align: center;
-      //       padding-top: 40px;
-      //       color: white;
-      //       font-size: 1.4em;
-      //     }
-      //   }
-      //   &::before {
-      //     content: "Projects";
-      //     position: absolute;
-      //     font-size: 13em;
-      //     letter-spacing: 6px;
-      //     top: 20px;
-      //     left: 50px;
-      //     color: #1b1b1d8e;
-      //     text-transform: uppercase;
-      //     font-family: "Coda Caption", sans-serif;
-      //   }
-      // }
     }
     footer {
       height: 5vh;

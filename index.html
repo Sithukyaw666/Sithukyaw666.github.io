@@ -3,10 +3,11 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Document</title>
+    <title>STK</title>
     <link rel="stylesheet" href="./style.css" />
   </head>
   <body>
+    <div class="cursor"></div>
     <header>
       <h1 class="logo"></h1>
       <ul class="navlinks">
@@ -21,21 +22,24 @@
           <div class="text">
             <h1>Hello,</h1>
             <h1>I'm <span>Sithu Kyaw</span></h1>
-            <p>Professional Trash</p>
-          </div>
-          <div class="image">
-            <img src="./profile.svg" alt="" />
+
+            <p>
+              Professtional trash who pretend to be
+              <span>Full-Stack Dev</span> and <span>Dev-Ops</span>
+            </p>
           </div>
         </div>
         <div class="about" id="about">
           <div><h1>Who am I?</h1></div>
-          <p>
+          <p class="intro">
             My name is Sithu Kyaw, Student at University of Information
             Techonology
             <br />
             Useless douchebag and brainless twat
             <br />
             Introvert and non existence piece of shit
+            <br />
+            Does nothing much but <span>MERN Stack</span>
           </p>
           <!-- <button>Download my CV</button> -->
         </div>
@@ -44,22 +48,27 @@
           <p>I'm always ready for nothing</p>
           <p>
             Please contact me via
-            <a href="mailto:sithukyaw27500@gmail.com"
-              >sithukyaw27500@gmail.com</a
-            >
+            <a href="mailto:sithukyaw27500@gmail.com">gmail</a>
+            /
+            <a href="https://twitter.com/Sithukyaw666">twitter</a>
           </p>
         </div>
         <footer>
           <p class="year">&copy; Sithu Kyaw |</p>
         </footer>
       </section>
-      <script>
-        const date = new Date();
-        const year = date.getFullYear();
-        const p = document.querySelector(".year");
-        p.innerText += " " + year;
-      </script>
     </main>
     <!-- <footer></footer> -->
+    <script>
+      const date = new Date();
+      const year = date.getFullYear();
+      const p = document.querySelector(".year");
+      p.innerText += " " + year;
+
+      const cursor = document.querySelector(".cursor");
+      const about = document.querySelector(".about");
+      const links = document.querySelectorAll("li,a");
+      const intro = document.querySelectorAll(".text h1");
+    </script>
   </body>
 </html>
