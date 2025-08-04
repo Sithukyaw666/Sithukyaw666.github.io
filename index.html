@@ -26,6 +26,9 @@
       href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
     />
 
+    <!-- D3.js for Skill Constellation -->
+    <script src="https://d3js.org/d3.v7.min.js"></script>
+
     <meta
       name="description"
       content="Sithu Kyaw - Professional trash pretending to be engineer-ish. Digital architect in the cyberpunk reality."
@@ -71,6 +74,12 @@
             <a href="#about" class="nav-link">
               <i class="fas fa-user-secret"></i>
               <span>about</span>
+            </a>
+          </li>
+          <li>
+            <a href="#skills" class="nav-link">
+              <i class="fas fa-network-wired"></i>
+              <span>skills</span>
             </a>
           </li>
           <li>
@@ -131,14 +140,14 @@
       <!-- About Section with Glassmorphism -->
       <section id="about" class="about-section">
         <div class="section-container">
-          <div class="section-header">
+          <!-- <div class="section-header">
             <h2 class="cyber-heading">
               <span class="heading-bracket">&lt;</span>
               ABOUT_ME
               <span class="heading-bracket">/&gt;</span>
             </h2>
             <div class="cyber-divider"></div>
-          </div>
+          </div> -->
 
           <div class="glass-card">
             <div class="card-header">
@@ -179,7 +188,7 @@
             </div>
 
             <div class="bio-section">
-              <h3 class="bio-title">// WHO AM I?</h3>
+              <!-- <h3 class="bio-title">// WHO AM I?</h3> -->
               <div class="bio-content">
                 <p>
                   Name’s Sithu Kyaw. Technically a former student at the
@@ -209,17 +218,93 @@
         </div>
       </section>
 
+      <!-- Skills Constellation Section -->
+      <section id="skills" class="skills-section">
+        <div class="section-container">
+          <!-- <div class="section-header">
+            <h2 class="cyber-heading">
+              <span class="heading-bracket">&lt;</span>
+              TECH_CONSTELLATION
+              <span class="heading-bracket">/&gt;</span>
+            </h2>
+            <div class="cyber-divider"></div>
+          </div> -->
+
+          <div class="constellation-container">
+            <div class="terminal-window constellation-terminal">
+              <div class="terminal-header">
+                <div class="terminal-buttons">
+                  <span class="btn-close"></span>
+                  <span class="btn-minimize"></span>
+                  <span class="btn-maximize"></span>
+                </div>
+                <div class="terminal-title">skill_lists</div>
+              </div>
+              <div class="terminal-body">
+                <div class="contact-line">
+                  <span class="prompt">guest@matrix:~$</span>
+                  <span class="command"
+                    >scan --tech-stack --verbose --format=constellation</span
+                  >
+                </div>
+                <div class="skill-output">
+                  <p class="scan-status">
+                    Scanning digital capabilities...
+                    <span class="success">CONSTELLATION LOADED</span>
+                  </p>
+                  <p class="constellation-hint">
+                    Interactive skill network // Click nodes for details // Drag
+                    to explore
+                  </p>
+                  <p class="constellation-legend">
+                    <span style="color: #f0db4f">●</span> Backend &nbsp;
+                    <span style="color: #339933">●</span> JS Frameworks &nbsp;
+                    <span style="color: #2496ed">●</span> Containers &nbsp;
+                    <span style="color: #f46800">●</span> CNCF &nbsp;
+                    <span style="color: #466bb0">●</span> Service Mesh &nbsp;
+                    <span style="color: #2088ff">●</span> CI/CD &nbsp;
+                    <span style="color: #fcc624">●</span> Linux &nbsp;
+                    <span style="color: #f05032">●</span> Git/VCS
+                  </p>
+                </div>
+
+                <!-- Skill Constellation SVG Container -->
+                <div id="skillConstellation" class="constellation-map"></div>
+
+                <!-- Skill Details Panel -->
+                <div id="skillDetails" class="skill-details-panel hidden">
+                  <div class="detail-header">
+                    <h4 id="skillTitle">Loading...</h4>
+                    <button id="closeDetails" class="close-btn">×</button>
+                  </div>
+                  <div class="detail-content">
+                    <div id="skillDescription">
+                      Select a node to view details
+                    </div>
+                    <div id="skillLevel" class="skill-level">
+                      <div class="level-bar">
+                        <div class="level-progress"></div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
       <!-- Contact Section with Neon Effects -->
       <section id="contact" class="contact-section">
         <div class="section-container">
-          <div class="section-header">
+          <!-- <div class="section-header">
             <h2 class="cyber-heading">
               <span class="heading-bracket">&lt;</span>
               ESTABLISH_CONNECTION
               <span class="heading-bracket">/&gt;</span>
             </h2>
             <div class="cyber-divider"></div>
-          </div>
+          </div> -->
 
           <div class="contact-grid">
             <div class="contact-terminal">
@@ -229,7 +314,7 @@
                   <span class="btn-minimize"></span>
                   <span class="btn-maximize"></span>
                 </div>
-                <div class="terminal-title">secure_channel.exe</div>
+                <div class="terminal-title">establish connection</div>
               </div>
               <div class="terminal-body">
                 <div class="contact-line">
@@ -298,7 +383,7 @@
           <span class="copyright-text">
             &copy; <span id="currentYear"></span> Sithu Kyaw |
           </span>
-          <span class="powered-by"> Powered by Cyberpunk.css & Future.js </span>
+          <span class="powered-by"> Powered by Sonnet4 </span>
         </div>
         <div class="footer-status">
           <span class="status-dot online"></span>
@@ -354,7 +439,766 @@
             }, i * 100);
           }
         }
+
+        // Initialize constellation immediately for debugging
+        setTimeout(() => {
+          const constellationContainer =
+            document.getElementById("skillConstellation");
+          if (constellationContainer) {
+            initSkillConstellation();
+          } else {
+          }
+        }, 3000); // Increased delay
+
+        // Also try after window load
+        window.addEventListener("load", () => {
+          setTimeout(() => {
+            const constellationContainer =
+              document.getElementById("skillConstellation");
+            if (constellationContainer) {
+              initSkillConstellation();
+            }
+          }, 2000); // Increased delay
+        });
       });
+
+      // Skill Constellation Implementation
+      function initSkillConstellation() {
+        // Check if D3 is available
+        if (typeof d3 === "undefined") {
+          console.error("D3.js is not loaded!");
+          return;
+        }
+        console.log("✓ D3.js is available, version:", d3.version);
+
+        const container = d3.select("#skillConstellation");
+
+        // Check if already initialized
+        if (!container.empty() && container.select("svg").empty() === false) {
+          console.log("❌ Constellation already initialized, skipping");
+          return;
+        }
+
+        // Add loading indicator
+        container.html(
+          '<div style="text-align: center; padding: 2rem; color: var(--cyber-primary); font-family: var(--font-mono);">🚀 Initializing constellation matrix...</div>'
+        );
+
+        setTimeout(() => {
+          container.html(""); // Clear loading message
+          createConstellation();
+        }, 500);
+      }
+
+      function createConstellation() {
+        const skillsData = {
+          "Backend Languages": {
+            category: "core",
+            color: "#F0DB4F", // JavaScript official color
+            skills: [
+              {
+                name: "JavaScript",
+                level: 90,
+                description:
+                  "ES6+, Node.js, async/await mastery. Building scalable backend services.",
+                icon: "fab fa-js-square",
+                color: "#F0DB4F",
+              },
+              {
+                name: "Go",
+                level: 85,
+                description:
+                  "Concurrent programming, microservices, high-performance APIs. gRPC and REST.",
+                icon: "fa-brands fa-golang",
+                color: "#00ADD8",
+              },
+              {
+                name: "Python",
+                level: 75,
+                description:
+                  "Backend services, automation scripts, data processing pipelines.",
+                icon: "fab fa-python",
+                color: "#3776AB",
+              },
+              {
+                name: "TypeScript",
+                level: 88,
+                description:
+                  "Type-safe backend development, strong typing for large codebases.",
+                icon: "fas fa-code",
+                color: "#3178C6",
+              },
+            ],
+          },
+          "JS Frameworks": {
+            category: "frontend",
+            color: "#339933", // Node.js official color
+            skills: [
+              {
+                name: "Node.js",
+                level: 92,
+                description:
+                  "Express, Fastify, event-driven architecture. Real-time applications.",
+                icon: "fab fa-node-js",
+                color: "#339933",
+              },
+              {
+                name: "Express.js",
+                level: 88,
+                description:
+                  "RESTful APIs, middleware, authentication, robust web applications.",
+                icon: "fas fa-server",
+                color: "#000000",
+              },
+              {
+                name: "Fastify",
+                level: 80,
+                description:
+                  "High-performance alternative to Express. Schema validation, plugins.",
+                icon: "fas fa-rocket",
+                color: "#000000",
+              },
+              {
+                name: "NestJS",
+                level: 78,
+                description:
+                  "Enterprise-grade Node.js framework. Dependency injection, decorators.",
+                icon: "fas fa-layer-group",
+                color: "#E0234E",
+              },
+            ],
+          },
+          "Container & Orchestration": {
+            category: "devops",
+            color: "#2496ED", // Docker official color
+            skills: [
+              {
+                name: "Docker",
+                level: 92,
+                description:
+                  "Containerization expert. Multi-stage builds, optimization, security.",
+                icon: "fab fa-docker",
+                color: "#2496ED",
+              },
+              {
+                name: "Kubernetes",
+                level: 85,
+                description:
+                  "Pod management, services, ingress, helm charts. Production deployments.",
+                icon: "fas fa-dharmachakra",
+                color: "#326CE5",
+              },
+              {
+                name: "Docker Compose",
+                level: 90,
+                description:
+                  "Multi-container applications, development environments, service orchestration.",
+                icon: "fas fa-cubes",
+                color: "#2496ED",
+              },
+              {
+                name: "Podman",
+                level: 70,
+                description:
+                  "Rootless containers, Docker alternative, security-focused container runtime.",
+                icon: "fas fa-box",
+                color: "#892CA0",
+              },
+            ],
+          },
+          "CNCF Ecosystem": {
+            category: "cloud",
+            color: "#F46800", // CNCF Orange
+            skills: [
+              {
+                name: "Prometheus",
+                level: 80,
+                description:
+                  "Metrics collection, alerting, monitoring cloud-native applications.",
+                icon: "fas fa-chart-line",
+                color: "#E6522C",
+              },
+              {
+                name: "Grafana",
+                level: 82,
+                description:
+                  "Visualization dashboards, real-time monitoring, performance analytics.",
+                icon: "fas fa-chart-bar",
+                color: "#F46800",
+              },
+              {
+                name: "Loki",
+                level: 75,
+                description:
+                  "Distributed tracing, microservices observability, performance debugging.",
+                icon: "fas fa-project-diagram",
+                color: "#60D0E4",
+              },
+              {
+                name: "Helm",
+                level: 78,
+                description:
+                  "Kubernetes package manager, templating, application deployment automation.",
+                icon: "fas fa-anchor",
+                color: "#0F1689",
+              },
+            ],
+          },
+          "Service Mesh": {
+            category: "network",
+            color: "#466BB0", // Istio blue
+            skills: [
+              {
+                name: "Istio",
+                level: 72,
+                description:
+                  "Service mesh management, traffic control, security policies, observability.",
+                icon: "fas fa-network-wired",
+                color: "#466BB0",
+              },
+              {
+                name: "Envoy",
+                level: 68,
+                description:
+                  "Proxy configuration, load balancing, service discovery in microservices.",
+                icon: "fas fa-route",
+                color: "#AC6199",
+              },
+              {
+                name: "Linkerd",
+                level: 65,
+                description:
+                  "Lightweight service mesh, automatic TLS, traffic shifting capabilities.",
+                icon: "fas fa-link",
+                color: "#2DCEAA",
+              },
+            ],
+          },
+          "CI/CD Tools": {
+            category: "automation",
+            color: "#2088FF", // GitHub blue
+            skills: [
+              {
+                name: "GitHub Actions",
+                level: 88,
+                description:
+                  "Workflow automation, CI/CD pipelines, deployment strategies, testing.",
+                icon: "fab fa-github",
+                color: "#181717",
+              },
+              {
+                name: "GitLab CI",
+                level: 82,
+                description:
+                  "Pipeline configuration, auto-scaling runners, security scanning integration.",
+                icon: "fab fa-gitlab",
+                color: "#FCA326",
+              },
+              {
+                name: "Jenkins",
+                level: 78,
+                description:
+                  "Build automation, plugin ecosystem, distributed builds, legacy system integration.",
+                icon: "fas fa-tools",
+                color: "#D33833",
+              },
+              {
+                name: "ArgoCD",
+                level: 75,
+                description:
+                  "GitOps deployment, Kubernetes continuous delivery, declarative configuration.",
+                icon: "fas fa-sync-alt",
+                color: "#EF7B4D",
+              },
+            ],
+          },
+          "Linux & Systems": {
+            category: "systems",
+            color: "#FCC624", // Linux yellow
+            skills: [
+              {
+                name: "Linux",
+                level: 90,
+                description:
+                  "System administration, shell scripting, performance tuning, security hardening.",
+                icon: "fab fa-linux",
+                color: "#FCC624",
+              },
+              {
+                name: "Bash",
+                level: 88,
+                description:
+                  "Advanced scripting, automation, system integration, command-line mastery.",
+                icon: "fas fa-terminal",
+                color: "#4EAA25",
+              },
+              {
+                name: "SystemD",
+                level: 80,
+                description:
+                  "Service management, unit files, system initialization, logging configuration.",
+                icon: "fas fa-cogs",
+                color: "#30A3EC",
+              },
+              {
+                name: "Nginx",
+                level: 85,
+                description:
+                  "Reverse proxy, load balancing, SSL termination, performance optimization.",
+                icon: "fas fa-server",
+                color: "#009639",
+              },
+            ],
+          },
+          VCS: {
+            category: "tools",
+            color: "#F05032", // Git orange
+            skills: [
+              {
+                name: "Git",
+                level: 92,
+                description:
+                  "Advanced workflows, branching strategies, conflict resolution, repository management.",
+                icon: "fab fa-git-alt",
+                color: "#F05032",
+              },
+              {
+                name: "GitHub",
+                level: 90,
+                description:
+                  "Collaboration, code review, project management, automated workflows.",
+                icon: "fab fa-github",
+                color: "#181717",
+              },
+              {
+                name: "GitLab",
+                level: 85,
+                description:
+                  "DevOps platform, merge requests, issue tracking, integrated CI/CD.",
+                icon: "fab fa-gitlab",
+                color: "#FCA326",
+              },
+            ],
+          },
+        };
+
+        const container = d3.select("#skillConstellation");
+
+        if (container.empty()) {
+          console.error("Constellation container not found!");
+          return;
+        }
+
+        // Clear any existing content
+        container.selectAll("*").remove();
+
+        const containerRect = container.node().getBoundingClientRect();
+
+        const width = Math.max(900, containerRect.width || 900);
+        const height = 700;
+
+        // Create SVG
+        const svg = container
+          .append("svg")
+          .attr("width", "100%")
+          .attr("height", height)
+          .attr("viewBox", `0 0 ${width} ${height}`)
+          .style("background", "transparent");
+
+        // Define gradients for cyberpunk effect
+        const defs = svg.append("defs");
+
+        // Cyberpunk gradient for links
+        const linkGradient = defs
+          .append("linearGradient")
+          .attr("id", "linkGradient")
+          .attr("x1", "0%")
+          .attr("y1", "0%")
+          .attr("x2", "100%")
+          .attr("y2", "0%");
+
+        linkGradient
+          .append("stop")
+          .attr("offset", "0%")
+          .style("stop-color", "#00ffff")
+          .style("stop-opacity", 0.3);
+
+        linkGradient
+          .append("stop")
+          .attr("offset", "50%")
+          .style("stop-color", "#ff0080")
+          .style("stop-opacity", 0.8);
+
+        linkGradient
+          .append("stop")
+          .attr("offset", "100%")
+          .style("stop-color", "#00ffff")
+          .style("stop-opacity", 0.3);
+
+        // Create zoom behavior
+        const zoom = d3
+          .zoom()
+          .scaleExtent([0.5, 2])
+          .on("zoom", (event) => {
+            skillsGroup.attr("transform", event.transform);
+          });
+
+        svg.call(zoom);
+
+        // Main group for skills constellation
+        const skillsGroup = svg.append("g").attr("class", "skills-group");
+
+        // Process data for D3
+        const nodes = [];
+        const links = [];
+        const categories = Object.keys(skillsData);
+
+        // Create category centers distributed in a circle
+        const categoryPositions = {};
+        const centerX = width / 2;
+        const centerY = height / 2;
+        const radius = 180; // Increased radius for better spacing
+
+        // Add central main node (representing STK)
+        const mainNode = {
+          id: "main-stk",
+          type: "main",
+          description: "Architect & Full-Stack Developer",
+          level: 100,
+          color: "#000fff", // Cyber cyan
+          x: centerX,
+          y: centerY,
+          fx: centerX, // Fix position at center
+          fy: centerY,
+        };
+        nodes.push(mainNode);
+
+        categories.forEach((category, i) => {
+          const angle = (i / categories.length) * 2 * Math.PI;
+          categoryPositions[category] = {
+            x: centerX + Math.cos(angle) * radius,
+            y: centerY + Math.sin(angle) * radius,
+          };
+        });
+
+        // Create nodes
+        categories.forEach((category) => {
+          const categoryData = skillsData[category];
+
+          // Add category node
+          const categoryNode = {
+            id: category,
+            type: "category",
+            category: categoryData.category,
+            name: category,
+            level: 100,
+            color: categoryData.color,
+            x: categoryPositions[category].x,
+            y: categoryPositions[category].y,
+            fx: categoryPositions[category].x, // Fix position
+            fy: categoryPositions[category].y,
+          };
+          nodes.push(categoryNode);
+
+          // Create link from main node to category
+          links.push({
+            source: "main-stk",
+            target: category,
+          });
+
+          // Add skill nodes
+          categoryData.skills.forEach((skill, i) => {
+            const skillNode = {
+              id: `${category}-${skill.name}`,
+              type: "skill",
+              category: categoryData.category,
+              parent: category,
+              name: skill.name,
+              level: skill.level,
+              description: skill.description,
+              icon: skill.icon,
+              color: skill.color,
+            };
+            nodes.push(skillNode);
+
+            // Create link to category
+            links.push({
+              source: category,
+              target: `${category}-${skill.name}`,
+            });
+          });
+        });
+
+        // Color scale for categories
+        const getNodeColor = (d) => {
+          return d.color || "#ffffff";
+        };
+
+        // Create force simulation
+        const simulation = d3
+          .forceSimulation(nodes)
+          .force(
+            "link",
+            d3
+              .forceLink(links)
+              .id((d) => d.id)
+              .distance(80)
+              .strength(0.5)
+          )
+          .force(
+            "charge",
+            d3.forceManyBody().strength((d) => {
+              // Main node has stronger attraction
+              if (d.type === "main") return -300;
+              return -150;
+            })
+          )
+          .force("center", d3.forceCenter(centerX, centerY))
+          .force(
+            "collision",
+            d3.forceCollide().radius((d) => {
+              if (d.type === "main") return 35;
+              if (d.type === "category") return 25;
+              return Math.max(22, d.level / 5 + 15); // Larger collision radius for skill nodes
+            })
+          );
+
+        // Create links with immediate proper styling
+        const link = skillsGroup
+          .append("g")
+          .selectAll("line")
+          .data(links)
+          .enter()
+          .append("line")
+          .attr("class", "constellation-link")
+          .style("stroke", (d) => {
+            // Check if this link connects to main node using string comparison
+            if (d.source === "main-stk" || d.target === "main-stk") {
+              return "url(#linkGradient)";
+            }
+            return "rgba(255, 255, 255, 0.4)";
+          })
+          .style("stroke-opacity", (d) => {
+            if (d.source === "main-stk" || d.target === "main-stk") {
+              return 0.8;
+            }
+            return 0.6;
+          })
+          .style("stroke-width", (d) => {
+            if (d.source === "main-stk" || d.target === "main-stk") {
+              return 3;
+            }
+            return 2;
+          });
+
+        // Create nodes
+        const node = skillsGroup
+          .append("g")
+          .selectAll("g")
+          .data(nodes)
+          .enter()
+          .append("g")
+          .attr("class", (d) => `constellation-node ${d.type}`)
+          .style("cursor", "pointer")
+          .call(
+            d3
+              .drag()
+              .on("start", dragstarted)
+              .on("drag", dragged)
+              .on("end", dragended)
+          );
+
+        // Add circles for nodes
+        node
+          .append("circle")
+          .attr("r", (d) => {
+            if (d.type === "main") return 30; // Larger main node
+            if (d.type === "category") return 20;
+            return Math.max(18, d.level / 5 + 12); // Larger skill nodes for better icon containment
+          })
+          .style("fill", (d) => getNodeColor(d))
+          .style("stroke", (d) => (d.type === "main" ? "#ff0080" : "#ffffff")) // Pink stroke for main node
+          .style("stroke-width", (d) => (d.type === "main" ? 3 : 2))
+          .style("filter", (d) => {
+            if (d.type === "main")
+              return "drop-shadow(0 0 20px rgba(0, 255, 255, 0.8))";
+            return "drop-shadow(0 0 10px rgba(255, 255, 255, 0.3))";
+          });
+
+        // Add special icon for main node
+        node
+          .filter((d) => d.type === "main")
+          .append("foreignObject")
+          .attr("width", 24)
+          .attr("height", 24)
+          .attr("x", -12)
+          .attr("y", -12)
+          .html(
+            '<i class="fas fa-user-astronaut" style="font-size: 20px; color: white; display: flex; justify-content: center; align-items: center; width: 100%; height: 100%;"></i>'
+          );
+
+        // Add Font Awesome icons for skills - centered
+        node
+          .filter((d) => d.type === "skill" && d.icon)
+          .append("foreignObject")
+          .attr("width", 20)
+          .attr("height", 20)
+          .attr("x", -10)
+          .attr("y", -10)
+          .html(
+            (d) =>
+              `<i class="${d.icon}" style="font-size: 16px; color: white; display: flex; justify-content: center; align-items: center; width: 100%; height: 100%;"></i>`
+          );
+
+        // Add text labels for main node
+        node
+          .filter((d) => d.type === "main")
+          .append("text")
+          .text((d) => d.name)
+          .attr("text-anchor", "middle")
+          .attr("dy", 45)
+          .style("fill", "#00ffff")
+          .style("font-size", "16px")
+          .style("font-family", "var(--font-mono)")
+          .style("font-weight", "bold")
+          .style("text-shadow", "0 0 10px rgba(0, 255, 255, 0.8)");
+
+        // Add text labels for categories
+        node
+          .filter((d) => d.type === "category")
+          .append("text")
+          .text((d) => d.name.split(" ")[0])
+          .attr("text-anchor", "middle")
+          .attr("dy", 30)
+          .style("fill", "#ffffff")
+          .style("font-size", "12px")
+          .style("font-family", "var(--font-mono)")
+          .style("font-weight", "bold");
+
+        // Add hover effects
+        node
+          .on("mouseover", function (event, d) {
+            d3.select(this)
+              .select("circle")
+              .transition()
+              .duration(200)
+              .attr("r", (d) => {
+                if (d.type === "main") return 35;
+                if (d.type === "category") return 25;
+                return Math.max(22, d.level / 4 + 15); // Increased hover size for skill nodes
+              })
+              .style("filter", (d) => {
+                if (d.type === "main")
+                  return "drop-shadow(0 0 25px rgba(0, 255, 255, 1))";
+                return "drop-shadow(0 0 15px rgba(255, 255, 255, 0.6))";
+              });
+          })
+          .on("mouseout", function (event, d) {
+            d3.select(this)
+              .select("circle")
+              .transition()
+              .duration(200)
+              .attr("r", (d) => {
+                if (d.type === "main") return 30;
+                if (d.type === "category") return 20;
+                return Math.max(18, d.level / 5 + 12); // Back to larger normal size
+              })
+              .style("filter", (d) => {
+                if (d.type === "main")
+                  return "drop-shadow(0 0 20px rgba(0, 255, 255, 0.8))";
+                return "drop-shadow(0 0 10px rgba(255, 255, 255, 0.3))";
+              });
+          })
+          .on("click", function (event, d) {
+            if (d.type === "skill") {
+              showSkillDetails(d);
+            } else if (d.type === "main") {
+              showMainNodeDetails(d);
+            }
+          });
+
+        // Update positions on simulation tick
+        simulation.on("tick", () => {
+          link
+            .attr("x1", (d) => d.source.x)
+            .attr("y1", (d) => d.source.y)
+            .attr("x2", (d) => d.target.x)
+            .attr("y2", (d) => d.target.y);
+
+          node.attr("transform", (d) => `translate(${d.x},${d.y})`);
+        });
+
+        // Drag functions
+        function dragstarted(event) {
+          if (!event.active) simulation.alphaTarget(0.3).restart();
+          event.subject.fx = event.subject.x;
+          event.subject.fy = event.subject.y;
+        }
+
+        function dragged(event) {
+          event.subject.fx = event.x;
+          event.subject.fy = event.y;
+        }
+
+        function dragended(event) {
+          if (!event.active) simulation.alphaTarget(0);
+          // Keep main node and category nodes fixed
+          if (
+            event.subject.type === "main" ||
+            event.subject.type === "category"
+          ) {
+            // Restore original position for main and category nodes
+            if (event.subject.type === "main") {
+              event.subject.fx = centerX;
+              event.subject.fy = centerY;
+            } else {
+              // Restore category positions
+              event.subject.fx = categoryPositions[event.subject.id].x;
+              event.subject.fy = categoryPositions[event.subject.id].y;
+            }
+          } else {
+            event.subject.fx = null;
+            event.subject.fy = null;
+          }
+        }
+
+        // Main node details function
+        function showMainNodeDetails(mainNode) {
+          const panel = document.getElementById("skillDetails");
+          const title = document.getElementById("skillTitle");
+          const description = document.getElementById("skillDescription");
+          const levelBar = document.querySelector(".level-progress");
+
+          title.innerHTML = `<i class="fas fa-user-astronaut" style="color: #00ffff; margin-right: 8px;"></i>${mainNode.name}`;
+          description.textContent = mainNode.description;
+          levelBar.style.width = "100%";
+          levelBar.style.backgroundColor = "#00ffff";
+
+          panel.classList.remove("hidden");
+        }
+
+        // Skill details panel functionality
+        function showSkillDetails(skill) {
+          const panel = document.getElementById("skillDetails");
+          const title = document.getElementById("skillTitle");
+          const description = document.getElementById("skillDescription");
+          const levelBar = document.querySelector(".level-progress");
+
+          title.innerHTML = `<i class="${skill.icon}" style="color: ${skill.color}; margin-right: 8px;"></i>${skill.name}`;
+          description.textContent = skill.description;
+          levelBar.style.width = `${skill.level}%`;
+          levelBar.style.backgroundColor = skill.color;
+
+          panel.classList.remove("hidden");
+        }
+
+        // Close details panel
+        document
+          .getElementById("closeDetails")
+          .addEventListener("click", () => {
+            document.getElementById("skillDetails").classList.add("hidden");
+          });
+      }
 
       // Create floating matrix particles
       function createMatrixParticle(container) {
@@ -447,14 +1291,34 @@
         entries.forEach((entry) => {
           if (entry.isIntersecting) {
             entry.target.classList.add("in-view");
+
+            // Initialize constellation when skills section is visible
+            if (entry.target.id === "skills") {
+              setTimeout(() => {
+                const constellationContainer =
+                  document.getElementById("skillConstellation");
+                if (
+                  constellationContainer &&
+                  !constellationContainer.hasChildNodes()
+                ) {
+                  initSkillConstellation();
+                }
+              }, 500);
+            }
           }
         });
       }, observerOptions);
 
-      // Observe all animate-on-scroll elements
+      // Observe all animate-on-scroll elements and skills section
       document.querySelectorAll(".animate-on-scroll").forEach((el) => {
         observer.observe(el);
       });
+
+      // Observe skills section for lazy loading
+      const skillsSection = document.getElementById("skills");
+      if (skillsSection) {
+        observer.observe(skillsSection);
+      }
 
       // Add interactive hover effects
       document
