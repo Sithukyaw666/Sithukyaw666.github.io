@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>STK@fedora:~$ - Terminal Portfolio</title>
+
+    <!-- Custom Cyberpunk Terminal Styles -->
+    <link rel="stylesheet" href="./terminal.css" />
+
+    <!-- Font Awesome for Icons -->
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+    />
+
+    <!-- D3.js for Constellation Visualization -->
+    <script src="https://d3js.org/d3.v7.min.js"></script>
+
+    <meta
+      name="description"
+      content="Sithu Kyaw - Interactive terminal portfolio. Digital architect and full-stack developer showcasing skills through command-line interface."
+    />
+    <meta
+      name="keywords"
+      content="terminal portfolio, developer, full-stack, linux, cyberpunk, interactive"
+    />
+  </head>
+  <body>
+    <!-- Loading Screen -->
+    <div id="loading" class="loading-screen">
+      <div class="loading-content">
+        <div class="loading-spinner"></div>
+        <div class="loading-text">
+          <span class="typing-text">Booting system...</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Terminal Container -->
+    <div id="terminal-container" class="terminal-container hidden">
+      <!-- Terminal Header -->
+      <div class="terminal-header">
+        <div class="terminal-buttons">
+          <span class="btn close"></span>
+          <span class="btn minimize"></span>
+          <span class="btn maximize"></span>
+        </div>
+        <div class="terminal-title">
+          <i class="fas fa-terminal"></i>
+          STK@fedora:~$ - Terminal Portfolio
+        </div>
+      </div>
+
+      <!-- Terminal Body -->
+      <div id="terminal" class="terminal">
+        <!-- Welcome Banner -->
+        <div class="welcome-banner">
+          <pre class="ascii-art">
+          _____                        _____                            _____          
+         /\    \                      /\    \                          /\    \         
+        /::\    \                    /::\    \                        /::\____\        
+       /::::\    \                   \:::\    \                      /:::/    /        
+      /::::::\    \                   \:::\    \                    /:::/    /         
+     /:::/\:::\    \                   \:::\    \                  /:::/    /          
+    /:::/__\:::\    \                   \:::\    \                /:::/____/           
+    \:::\   \:::\    \                  /::::\    \              /::::\    \           
+  ___\:::\   \:::\    \                /::::::\    \            /::::::\____\________  
+ /\   \:::\   \:::\    \              /:::/\:::\    \          /:::/\:::::::::::\    \ 
+/::\   \:::\   \:::\____\            /:::/  \:::\____\        /:::/  |:::::::::::\____\
+\:::\   \:::\   \::/    /           /:::/    \::/    /        \::/   |::|~~~|~~~~~     
+ \:::\   \:::\   \/____/           /:::/    / \/____/          \/____|::|   |          
+  \:::\   \:::\    \              /:::/    /                         |::|   |          
+   \:::\   \:::\____\            /:::/    /                          |::|   |          
+    \:::\  /:::/    /            \::/    /                           |::|   |          
+     \:::\/:::/    /              \/____/                            |::|   |          
+      \::::::/    /                                                  |::|   |          
+       \::::/    /                                                   \::|   |          
+        \::/    /                                                     \:|   |          
+         \/____/                                                       \|___|  
+                       
+[PROFESSIONAL_TRASH] 
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+Welcome to my Interactive Terminal Portfolio
+
+Type 'help' to see available commands or 'about' to learn more
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+</pre
+          >
+        </div>
+
+        <!-- Terminal Output -->
+        <div id="output" class="output"></div>
+
+        <!-- Input Line -->
+        <div class="input-line">
+          <span class="prompt">guest@fedora:~$ </span>
+          <input
+            type="text"
+            id="command-input"
+            class="command-input"
+            autocomplete="off"
+            autofocus
+          />
+          <!-- <span class="cursor">█</span> -->
+        </div>
+      </div>
+
+      <!-- Autocomplete Suggestions -->
+      <div id="suggestions" class="suggestions hidden"></div>
+    </div>
+
+    <!-- Help Panel -->
+    <div id="help-panel" class="help-panel hidden">
+      <div class="help-content">
+        <h3><i class="fas fa-question-circle"></i> Available Commands</h3>
+        <div class="help-commands">
+          <div class="help-section">
+            <h4>Navigation</h4>
+            <div class="command-item">
+              <code>help</code> - Show this help menu
+            </div>
+            <div class="command-item">
+              <code>clear</code> - Clear terminal screen
+            </div>
+            <div class="command-item">
+              <code>ls</code> - List available files and directories
+            </div>
+          </div>
+
+          <div class="help-section">
+            <h4>Information</h4>
+            <div class="command-item">
+              <code>whoami</code> - Display user information
+            </div>
+            <div class="command-item">
+              <code>cat &lt;filename&gt;</code> - Display file contents
+            </div>
+            <div class="command-item">
+              <code>contact</code> - Show contact information
+            </div>
+          </div>
+
+          <div class="help-section">
+            <h4>Portfolio</h4>
+            <div class="command-item">
+              <code>skills [--view=list|graph]</code> - Display skills (graph
+              shows interactive constellation)
+            </div>
+            <!-- <div class="command-item">
+              <code>projects [--sort=date|name]</code> - Show projects
+            </div> -->
+            <div class="command-item"><code>cv</code> - Display CV/Resume</div>
+          </div>
+
+          <div class="help-section">
+            <h4>System</h4>
+            <div class="command-item">
+              <code>theme [mocha|latte|frappe|macchiato]</code> - Change theme
+            </div>
+            <div class="command-item">
+              <code>website</code> - Switch to traditional website
+            </div>
+            <div class="command-item">
+              <code>history</code> - Show command history
+            </div>
+            <div class="command-item"><code>exit</code> - Exit terminal</div>
+          </div>
+        </div>
+        <div class="help-footer">
+          <p>
+            Use <kbd>Tab</kbd> for autocomplete, <kbd>↑</kbd>/<kbd>↓</kbd> for
+            history
+          </p>
+          <button id="close-help" class="close-help-btn">Close</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Terminal JavaScript -->
+    <script src="./terminal.js"></script>
+  </body>
+</html>
