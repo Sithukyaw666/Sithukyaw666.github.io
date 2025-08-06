@@ -176,21 +176,21 @@ class HybridPortfolio {
     }
   }
 
-  /* ===== TERMINAL WIDGET ===== */
-  openTerminalWidget() {
-    const widget = document.getElementById("terminal-widget");
-    if (widget) {
-      widget.classList.remove("hidden");
-      const input = document.getElementById("widget-input");
-      if (input) input.focus();
+  //   /* ===== TERMINAL WIDGET ===== */
+  //   openTerminalWidget() {
+  //     const widget = document.getElementById("terminal-widget");
+  //     if (widget) {
+  //       widget.classList.remove("hidden");
+  //       const input = document.getElementById("widget-input");
+  //       if (input) input.focus();
 
-      // Initialize terminal widget if not already done
-      if (!widget.dataset.initialized) {
-        this.initTerminalWidget();
-        widget.dataset.initialized = "true";
-      }
-    }
-  }
+  //       // Initialize terminal widget if not already done
+  //       if (!widget.dataset.initialized) {
+  //         this.initTerminalWidget();
+  //         widget.dataset.initialized = "true";
+  //       }
+  //     }
+  //   }
 
   closeTerminalWidget() {
     const widget = document.getElementById("terminal-widget");
@@ -443,7 +443,7 @@ drwxr-xr-x  skills.md
 drwxr-xr-x  projects/
 drwxr-xr-x  contact.txt
 drwxr-xr-x  resume.pdf
--rw-r--r--  README.md
+-rw-r--r--  readme.md
 -rw-r--r--  .gitignore
 -rwxr-xr-x  portfolio.exe
 

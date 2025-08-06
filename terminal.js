@@ -60,12 +60,6 @@ class TerminalPortfolio {
         size: "3.2K",
         modified: "2024-08-06",
       },
-      //   "projects.json": {
-      //     type: "file",
-      //     content: this.getProjectsContent(),
-      //     size: "5.8K",
-      //     modified: "2024-08-06",
-      //   },
       "cv.pdf": {
         type: "file",
         content: this.getCVContent(),
@@ -75,11 +69,11 @@ class TerminalPortfolio {
       "status.txt": {
         type: "file",
         content:
-          "Status: ONLINE_AND_CONFUSED\\nMode: Professional trash pretending to be engineer-ish\\nLast seen: Just now",
+          "Status: ONLINE_AND_CONFUSED\nMode: Professional trash pretending to be engineer-ish\nLast seen: Just now",
         size: "156B",
         modified: "2024-08-06",
       },
-      "README.md": {
+      "readme.md": {
         type: "file",
         content: this.getReadmeContent(),
         size: "1.8K",
