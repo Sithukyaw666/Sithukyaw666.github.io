@@ -24,7 +24,7 @@ class TerminalPortfolio {
       about: this.about.bind(this),
       contact: this.contact.bind(this),
       skills: this.showSkills.bind(this),
-      //   projects: this.showProjects.bind(this),
+      projects: this.showProjects.bind(this),
       cv: this.showCV.bind(this),
       resume: this.showCV.bind(this),
       history: this.showHistory.bind(this),
@@ -68,8 +68,10 @@ class TerminalPortfolio {
       },
       "status.txt": {
         type: "file",
-        content:
-          "Status: ONLINE_AND_CONFUSED\nMode: Professional trash pretending to be engineer-ish\nLast seen: Just now",
+        content: (() => {
+          const p = window.PORTFOLIO_DATA.profile;
+          return `Status: ${p.moodStatus}\nMode: ${p.title}\nLast seen: Just now`;
+        })(),
         size: "156B",
         modified: "2024-08-06",
       },
@@ -77,6 +79,12 @@ class TerminalPortfolio {
         type: "file",
         content: this.getReadmeContent(),
         size: "1.8K",
+        modified: "2024-08-06",
+      },
+      "projects.json": {
+        type: "file",
+        content: this.getProjectsContent(),
+        size: "2.4K",
         modified: "2024-08-06",
       },
     };
@@ -354,11 +362,12 @@ class TerminalPortfolio {
   }
 
   whoami() {
+    const p = window.PORTFOLIO_DATA.profile;
     this.addOutput(`${this.currentUser}`, "");
     this.addOutput("", "");
-    this.addOutput("User: Sithu Kyaw", "info");
-    this.addOutput("Role: [PROFESSIONAL TRASH]", "info");
-    this.addOutput("Status: ONLINE_AND_CONFUSED", "success");
+    this.addOutput(`User: ${p.name}`, "info");
+    this.addOutput(`Role: [PROFESSIONAL TRASH]`, "info");
+    this.addOutput(`Status: ${p.moodStatus}`, "success");
     this.addOutput("Shell: /bin/bash", "info");
     this.addOutput("Home: /home/stk", "info");
   }
@@ -368,6 +377,7 @@ class TerminalPortfolio {
   }
 
   contact() {
+    const p = window.PORTFOLIO_DATA.profile;
     const contactContainer = document.createElement("div");
     contactContainer.className = "contact-container";
 
@@ -375,26 +385,20 @@ class TerminalPortfolio {
       {
         icon: "fa-envelope",
         label: "Email",
-        value: "sithukyaw27500@gmail.com",
-        link: "mailto:sithukyaw27500@gmail.com",
-      },
-      {
-        icon: "fa-brands fa-twitter",
-        label: "X (Twitter)",
-        value: "@Sithukyaw666",
-        link: "https://twitter.com/Sithukyaw666",
+        value: p.email,
+        link: `mailto:${p.email}`,
       },
       {
         icon: "fa-brands fa-github-alt",
         label: "GitHub",
-        value: "github.com/Sithukyaw666",
-        link: "https://github.com/Sithukyaw666",
+        value: `github.com/${p.social.github.handle}`,
+        link: p.social.github.url,
       },
       {
         icon: "fa-brands fa-linkedin",
         label: "LinkedIn",
         value: "Connect with me",
-        link: "https://linkedin.com/in/sithukyaw",
+        link: p.social.linkedin.url,
       },
     ];
 
@@ -516,69 +520,68 @@ class TerminalPortfolio {
     }, 100);
   }
 
-  //   showProjects(args) {
-  //     const sortType =
-  //       args.find((arg) => arg.startsWith("--sort="))?.split("=")[1] || "date";
+  showProjects(args) {
+    const sortType =
+      args.find((arg) => arg.startsWith("--sort="))?.split("=")[1] || "date";
 
-  //     const projects = JSON.parse(this.getProjectsContent());
-  //     const projectsContainer = document.createElement("div");
-  //     projectsContainer.className = "projects-container";
+    const projects = [...window.PORTFOLIO_DATA.projects];
+    if (sortType === "name") {
+      projects.sort((a, b) => a.name.localeCompare(b.name));
+    } else {
+      projects.sort((a, b) => new Date(b.date) - new Date(a.date));
+    }
 
-  //     // Sort projects
-  //     const sortedProjects = [...projects];
-  //     if (sortType === "name") {
-  //       sortedProjects.sort((a, b) => a.name.localeCompare(b.name));
-  //     } else {
-  //       sortedProjects.sort((a, b) => new Date(b.date) - new Date(a.date));
-  //     }
+    const container = document.createElement("div");
+    container.className = "projects-container";
 
-  //     sortedProjects.forEach((project) => {
-  //       const projectItem = document.createElement("div");
-  //       projectItem.className = "project-item";
+    projects.forEach((project) => {
+      const item = document.createElement("div");
+      item.className = "project-item";
 
-  //       const techTags = project.technologies
-  //         .map((tech) => `<span class="tech-tag">${tech}</span>`)
-  //         .join("");
+      const techTags = project.tech
+        .map((t) => `<span class="tech-tag">${t}</span>`)
+        .join("");
 
-  //       const links = project.links
-  //         .map(
-  //           (link) =>
-  //             `<a href="${link.url}" target="_blank" class="project-link">
-  //                     <i class="fas ${link.icon}"></i> ${link.name}
-  //                 </a>`
-  //         )
-  //         .join("");
+      const typeBadge =
+        project.type === "fork"
+          ? `<span class="project-type-badge fork">fork</span>`
+          : `<span class="project-type-badge personal">personal</span>`;
 
-  //       projectItem.innerHTML = `
-  //                 <div class="project-header">
-  //                     <h3 class="project-title">${project.name}</h3>
-  //                     <span class="project-date">${project.date}</span>
-  //                 </div>
-  //                 <div class="project-description">${project.description}</div>
-  //                 <div class="project-tech">${techTags}</div>
-  //                 <div class="project-links">${links}</div>
-  //             `;
+      const liveLink = project.url
+        ? `<a href="${project.url}" target="_blank" class="project-link"><i class="fas fa-external-link-alt"></i> Live</a>`
+        : "";
+      const repoLink = project.repo
+        ? `<a href="${project.repo}" target="_blank" class="project-link"><i class="fab fa-github"></i> GitHub</a>`
+        : "";
 
-  //       projectsContainer.appendChild(projectItem);
-  //     });
+      item.innerHTML = `
+        <div class="project-header">
+          <h3 class="project-title">${project.name} ${typeBadge}</h3>
+          <span class="project-date">${project.date}</span>
+        </div>
+        <div class="project-description">${project.description}</div>
+        <div class="project-tech">${techTags}</div>
+        <div class="project-links">${liveLink}${repoLink}</div>
+      `;
 
-  //     this.addOutputElement(projectsContainer);
-  //   }
+      container.appendChild(item);
+    });
+
+    this.addOutputElement(container);
+  }
 
   showCV() {
+    const p = window.PORTFOLIO_DATA.profile;
     this.addOutput("=".repeat(60), "info");
     this.addOutput("                     CURRICULUM VITAE", "info");
     this.addOutput("=".repeat(60), "info");
     this.addOutput("", "");
 
     this.addOutput("PERSONAL INFORMATION", "info");
-    this.addOutput("Name: Sithu Kyaw", "");
-    this.addOutput(
-      "Role: Professional Trash Pretending to be Engineer-ish",
-      ""
-    );
+    this.addOutput(`Name: ${p.name}`, "");
+    this.addOutput(`Role: ${p.title}`, "");
     this.addOutput("Location: Myanmar", "");
-    this.addOutput("Email: sithukyaw27500@gmail.com", "");
+    this.addOutput(`Email: ${p.email}`, "");
     this.addOutput("", "");
 
     this.addOutput("EDUCATION", "info");
@@ -851,35 +854,29 @@ class TerminalPortfolio {
 
   // File content generators
   getAboutContent() {
-    return `# About Sithu Kyaw
+    const p = window.PORTFOLIO_DATA.profile;
+    return `# About ${p.name}
 
 ## Who Am I?
 
-Name's Sithu Kyaw. Technically a former student at the University of Information Technology — not that it matters. I just throw the name around to make it sound like I had a plan at some point.
-
-I somehow convince myself I'm doing "deep Linux stuff," messing with networks I barely understand, and writing backend code like I'm deploying to Mars and also sprinkling in some DevOps and DevSecOps buzzwords to sound employable.
-
-
-Basically the human version of a half-loaded man page and still talks like building the next Google from a laptop that sounds like it's about to take off every time VSCode is running.
-
-A jack of all trades, master of none, enthusiast of everything I half understand.
+${p.bio.join("\n\n")}
 
 ## Status
-**Current**: Professional trash pretending to be engineer-ish
-**Mood**: ONLINE_AND_CONFUSED
-**Coffee Level**: Dangerously low`;
+**Current**: ${p.title}
+**Mood**: ${p.moodStatus}
+**Coffee Level**: ${p.coffeeLevel}`;
   }
 
   getContactContent() {
+    const p = window.PORTFOLIO_DATA.profile;
     return `# Contact Information
 
 ## Get in Touch
 
 Feel free to reach out through any of these channels:
 
-**Email**: sithukyaw27500@gmail.com
-**X (Twitter)**: @Sithukyaw666  
-**GitHub**: github.com/Sithukyaw666
+**Email**: ${p.email}
+**GitHub**: github.com/${p.social.github.handle}
 **LinkedIn**: Connect with me for professional networking
 
 ## Response Time
@@ -888,63 +885,30 @@ Feel free to reach out through any of these channels:
 - Carrier Pigeon: Not recommended
 
 ## Time Zone
-Currently operating in Myanmar Time (UTC+6:30)
+Currently operating in ${p.timezone}
 
 ## Availability
 Available for:
-- Full-stack development projects
-- DevOps consulting
-- System architecture discussions
-- Coffee-fueled coding sessions
-- Debugging mysterious issues at 3 AM
+${p.availability.map((a) => `- ${a}`).join("\n")}
 
 ## Note
 I'm always ready for nothing, but somehow manage to get things done. Feel free to drop a message!`;
   }
 
   getSkillsContent() {
-    return JSON.stringify(
-      {
-        "Backend Languages": {
-          category: "core",
-          skills: [
-            { name: "JavaScript", level: 90 },
-            { name: "Go", level: 85 },
-            { name: "Python", level: 75 },
-            { name: "TypeScript", level: 88 },
-          ],
-        },
-        Frameworks: {
-          category: "development",
-          skills: [
-            { name: "Node.js", level: 92 },
-            { name: "Express.js", level: 88 },
-            { name: "Fastify", level: 80 },
-            { name: "NestJS", level: 78 },
-          ],
-        },
-        "DevOps & Infrastructure": {
-          category: "operations",
-          skills: [
-            { name: "Docker", level: 92 },
-            { name: "Kubernetes", level: 85 },
-            { name: "CI/CD", level: 88 },
-            { name: "Monitoring", level: 82 },
-          ],
-        },
-        "Cloud & Systems": {
-          category: "infrastructure",
-          skills: [
-            { name: "Linux", level: 90 },
-            { name: "AWS", level: 75 },
-            { name: "Networking", level: 80 },
-            { name: "Security", level: 75 },
-          ],
-        },
-      },
-      null,
-      2
-    );
+    const constellation = window.PORTFOLIO_DATA.skills.constellation;
+    const simplified = {};
+    Object.entries(constellation).forEach(([cat, data]) => {
+      simplified[cat] = {
+        category: data.category,
+        skills: data.skills.map((s) => ({ name: s.name, level: s.level })),
+      };
+    });
+    return JSON.stringify(simplified, null, 2);
+  }
+
+  getProjectsContent() {
+    return JSON.stringify(window.PORTFOLIO_DATA.projects, null, 2);
   }
 
   //   getProjectsContent() {
@@ -1018,13 +982,14 @@ I'm always ready for nothing, but somehow manage to get things done. Feel free t
   }
 
   getReadmeContent() {
+    const p = window.PORTFOLIO_DATA.profile;
     return `# STK Terminal Portfolio
 
-Welcome to my interactive terminal portfolio! 
+Welcome to my interactive terminal portfolio!
 
 ## Features
 - Interactive command-line interface
-- File system simulation  
+- File system simulation
 - Multiple cyberpunk themes
 - Command history and autocomplete
 - Mobile-responsive design
@@ -1033,8 +998,8 @@ Welcome to my interactive terminal portfolio!
 Type 'help' to see all available commands.
 
 ## Contact
-- Email: sithukyaw27500@gmail.com
-- GitHub: github.com/Sithukyaw666
+- Email: ${p.email}
+- GitHub: github.com/${p.social.github.handle}
 
 ## Version
 Terminal Portfolio v2.1
@@ -1044,296 +1009,7 @@ Built with ❤️ and lots of coffee ☕`;
 
   // Enhanced Skills Data for Constellation
   getConstellationSkillsData() {
-    return {
-      "Backend Languages": {
-        category: "core",
-        color: "#F0DB4F", // JavaScript official color
-        skills: [
-          {
-            name: "JavaScript",
-            level: 90,
-            description:
-              "ES6+, Node.js, async/await mastery. Building scalable backend services.",
-            icon: "fab fa-js-square",
-            color: "#F0DB4F",
-          },
-          {
-            name: "Go",
-            level: 85,
-            description:
-              "Concurrent programming, microservices, high-performance APIs. gRPC and REST.",
-            icon: "fa-brands fa-golang",
-            color: "#00ADD8",
-          },
-          {
-            name: "Python",
-            level: 75,
-            description:
-              "Backend services, automation scripts, data processing pipelines.",
-            icon: "fab fa-python",
-            color: "#3776AB",
-          },
-          {
-            name: "TypeScript",
-            level: 88,
-            description:
-              "Type-safe backend development, strong typing for large codebases.",
-            icon: "fas fa-code",
-            color: "#3178C6",
-          },
-        ],
-      },
-      "JS Frameworks": {
-        category: "frontend",
-        color: "#339933", // Node.js official color
-        skills: [
-          {
-            name: "Node.js",
-            level: 92,
-            description:
-              "Express, Fastify, event-driven architecture. Real-time applications.",
-            icon: "fab fa-node-js",
-            color: "#339933",
-          },
-          {
-            name: "Express.js",
-            level: 88,
-            description:
-              "RESTful APIs, middleware, authentication, robust web applications.",
-            icon: "fas fa-server",
-            color: "#000000",
-          },
-          {
-            name: "Fastify",
-            level: 80,
-            description:
-              "High-performance alternative to Express. Schema validation, plugins.",
-            icon: "fas fa-rocket",
-            color: "#000000",
-          },
-          {
-            name: "NestJS",
-            level: 78,
-            description:
-              "Enterprise-grade Node.js framework. Dependency injection, decorators.",
-            icon: "fas fa-layer-group",
-            color: "#E0234E",
-          },
-        ],
-      },
-      "Container & Orchestration": {
-        category: "devops",
-        color: "#2496ED", // Docker official color
-        skills: [
-          {
-            name: "Docker",
-            level: 92,
-            description:
-              "Containerization expert. Multi-stage builds, optimization, security.",
-            icon: "fab fa-docker",
-            color: "#2496ED",
-          },
-          {
-            name: "Kubernetes",
-            level: 85,
-            description:
-              "Pod management, services, ingress, helm charts. Production deployments.",
-            icon: "fas fa-dharmachakra",
-            color: "#326CE5",
-          },
-          {
-            name: "Docker Compose",
-            level: 90,
-            description:
-              "Multi-container applications, development environments, service orchestration.",
-            icon: "fas fa-cubes",
-            color: "#2496ED",
-          },
-          {
-            name: "Podman",
-            level: 70,
-            description:
-              "Rootless containers, Docker alternative, security-focused container runtime.",
-            icon: "fas fa-box",
-            color: "#892CA0",
-          },
-        ],
-      },
-      "CNCF Ecosystem": {
-        category: "cloud",
-        color: "#F46800", // CNCF Orange
-        skills: [
-          {
-            name: "Prometheus",
-            level: 80,
-            description:
-              "Metrics collection, alerting, monitoring cloud-native applications.",
-            icon: "fas fa-chart-line",
-            color: "#E6522C",
-          },
-          {
-            name: "Grafana",
-            level: 82,
-            description:
-              "Visualization dashboards, real-time monitoring, performance analytics.",
-            icon: "fas fa-chart-bar",
-            color: "#F46800",
-          },
-          {
-            name: "Loki",
-            level: 75,
-            description:
-              "Distributed tracing, microservices observability, performance debugging.",
-            icon: "fas fa-project-diagram",
-            color: "#60D0E4",
-          },
-          {
-            name: "Helm",
-            level: 78,
-            description:
-              "Kubernetes package manager, templating, application deployment automation.",
-            icon: "fas fa-anchor",
-            color: "#0F1689",
-          },
-        ],
-      },
-      "Service Mesh": {
-        category: "network",
-        color: "#466BB0", // Istio blue
-        skills: [
-          {
-            name: "Istio",
-            level: 72,
-            description:
-              "Service mesh management, traffic control, security policies, observability.",
-            icon: "fas fa-network-wired",
-            color: "#466BB0",
-          },
-          {
-            name: "Envoy",
-            level: 68,
-            description:
-              "Proxy configuration, load balancing, service discovery in microservices.",
-            icon: "fas fa-route",
-            color: "#AC6199",
-          },
-          {
-            name: "Linkerd",
-            level: 65,
-            description:
-              "Lightweight service mesh, automatic TLS, traffic shifting capabilities.",
-            icon: "fas fa-link",
-            color: "#2DCEAA",
-          },
-        ],
-      },
-      "CI/CD Tools": {
-        category: "automation",
-        color: "#2088FF", // GitHub blue
-        skills: [
-          {
-            name: "GitHub Actions",
-            level: 88,
-            description:
-              "Workflow automation, CI/CD pipelines, deployment strategies, testing.",
-            icon: "fab fa-github",
-            color: "#181717",
-          },
-          {
-            name: "GitLab CI",
-            level: 82,
-            description:
-              "Pipeline configuration, auto-scaling runners, security scanning integration.",
-            icon: "fab fa-gitlab",
-            color: "#FCA326",
-          },
-          {
-            name: "Jenkins",
-            level: 78,
-            description:
-              "Build automation, plugin ecosystem, distributed builds, legacy system integration.",
-            icon: "fas fa-tools",
-            color: "#D33833",
-          },
-          {
-            name: "ArgoCD",
-            level: 75,
-            description:
-              "GitOps deployment, Kubernetes continuous delivery, declarative configuration.",
-            icon: "fas fa-sync-alt",
-            color: "#EF7B4D",
-          },
-        ],
-      },
-      "Linux & Systems": {
-        category: "systems",
-        color: "#FCC624", // Linux yellow
-        skills: [
-          {
-            name: "Linux",
-            level: 90,
-            description:
-              "System administration, shell scripting, performance tuning, security hardening.",
-            icon: "fab fa-linux",
-            color: "#FCC624",
-          },
-          {
-            name: "Bash",
-            level: 88,
-            description:
-              "Advanced scripting, automation, system integration, command-line mastery.",
-            icon: "fas fa-terminal",
-            color: "#4EAA25",
-          },
-          {
-            name: "SystemD",
-            level: 80,
-            description:
-              "Service management, unit files, system initialization, logging configuration.",
-            icon: "fas fa-cogs",
-            color: "#30A3EC",
-          },
-          {
-            name: "Nginx",
-            level: 85,
-            description:
-              "Reverse proxy, load balancing, SSL termination, performance optimization.",
-            icon: "fas fa-server",
-            color: "#009639",
-          },
-        ],
-      },
-      VCS: {
-        category: "tools",
-        color: "#F05032", // Git orange
-        skills: [
-          {
-            name: "Git",
-            level: 92,
-            description:
-              "Advanced workflows, branching strategies, conflict resolution, repository management.",
-            icon: "fab fa-git-alt",
-            color: "#F05032",
-          },
-          {
-            name: "GitHub",
-            level: 90,
-            description:
-              "Collaboration, code review, project management, automated workflows.",
-            icon: "fab fa-github",
-            color: "#181717",
-          },
-          {
-            name: "GitLab",
-            level: 85,
-            description:
-              "DevOps platform, merge requests, issue tracking, integrated CI/CD.",
-            icon: "fab fa-gitlab",
-            color: "#FCA326",
-          },
-        ],
-      },
-    };
+    return window.PORTFOLIO_DATA.skills.constellation;
   }
 
   createSkillConstellation(containerId) {

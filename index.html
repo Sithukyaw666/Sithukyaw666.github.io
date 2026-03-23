@@ -161,24 +161,8 @@
         <!-- Footer -->
         <footer class="landing-footer">
           <p>&copy; 2024 Sithu Kyaw | Built with modern web technologies</p>
-          <div class="social-links">
-            <a
-              href="https://github.com/Sithukyaw666"
-              target="_blank"
-              title="GitHub"
-            >
-              <i class="fab fa-github"></i>
-            </a>
-            <a
-              href="https://twitter.com/Sithukyaw666"
-              target="_blank"
-              title="Twitter"
-            >
-              <i class="fab fa-twitter"></i>
-            </a>
-            <a href="mailto:sithukyaw27500@gmail.com" title="Email">
-              <i class="fas fa-envelope"></i>
-            </a>
+          <div class="social-links" id="landing-social-links">
+            <!-- Populated by portfolio.js from data/portfolio-data.js -->
           </div>
         </footer>
       </div>
@@ -195,6 +179,7 @@
           <ul class="nav-menu">
             <li><a href="#about" class="nav-link">About</a></li>
             <li><a href="#skills" class="nav-link">Skills</a></li>
+            <li><a href="#projects" class="nav-link">Projects</a></li>
             <li><a href="#contact" class="nav-link">Contact</a></li>
           </ul>
           <div class="nav-actions">
@@ -306,51 +291,18 @@
         <section id="skills" class="section skills">
           <div class="container">
             <h2 class="section-title">Technical Skills</h2>
-            <div class="skills-grid">
-              <div class="skill-category">
-                <h3 class="category-title">
-                  <i class="fas fa-code"></i>
-                  Frontend
-                </h3>
-                <div class="skill-list">
-                  <span class="skill-tag">HTML5</span>
-                  <span class="skill-tag">CSS3</span>
-                  <span class="skill-tag">JavaScript</span>
-                  <span class="skill-tag">React</span>
-                  <span class="skill-tag">Vue.js</span>
-                  <span class="skill-tag">TypeScript</span>
-                </div>
-              </div>
+            <div id="skills-grid" class="skills-grid">
+              <!-- Populated by portfolio.js from data/portfolio-data.js -->
+            </div>
+          </div>
+        </section>
 
-              <div class="skill-category">
-                <h3 class="category-title">
-                  <i class="fas fa-server"></i>
-                  Backend
-                </h3>
-                <div class="skill-list">
-                  <span class="skill-tag">Node.js</span>
-                  <span class="skill-tag">Python</span>
-                  <span class="skill-tag">Express</span>
-                  <span class="skill-tag">NestJS</span>
-                  <span class="skill-tag">PostgreSQL</span>
-                  <span class="skill-tag">MongoDB</span>
-                </div>
-              </div>
-
-              <div class="skill-category">
-                <h3 class="category-title">
-                  <i class="fas fa-tools"></i>
-                  Platform Engineering
-                </h3>
-                <div class="skill-list">
-                  <span class="skill-tag">Git</span>
-                  <span class="skill-tag">Docker</span>
-                  <span class="skill-tag">AWS</span>
-                  <span class="skill-tag">Linux</span>
-                  <span class="skill-tag">Kubernetes</span>
-                  <span class="skill-tag">Bash</span>
-                </div>
-              </div>
+        <!-- Projects Section -->
+        <section id="projects" class="section projects">
+          <div class="container">
+            <h2 class="section-title">Projects</h2>
+            <div id="projects-grid" class="projects-grid">
+              <!-- Populated by portfolio.js from data/portfolio-data.js -->
             </div>
           </div>
         </section>
@@ -359,61 +311,12 @@
         <section id="contact" class="section contact">
           <div class="container">
             <h2 class="section-title">Get In Touch</h2>
-            <div class="contact-content">
-              <div class="contact-info">
-                <h3>Let's Connect</h3>
-                <p>
-                  I am always ready for nothing but ping me if something breaks
-                  and I will just restart the server.
-                </p>
-                <div class="contact-methods">
-                  <a
-                    href="mailto:sithukyaw27500@gmail.com"
-                    class="contact-method"
-                  >
-                    <i class="fas fa-envelope"></i>
-                    <span>sithukyaw27500@gmail.com</span>
-                  </a>
-                  <a
-                    href="https://github.com/Sithukyaw666"
-                    class="contact-method"
-                  >
-                    <i class="fab fa-github"></i>
-                    <span>github.com/Sithukyaw666</span>
-                  </a>
-                  <a
-                    href="https://twitter.com/Sithukyaw666"
-                    class="contact-method"
-                  >
-                    <i class="fab fa-twitter"></i>
-                    <span>@Sithukyaw666</span>
-                  </a>
-                </div>
-              </div>
-              <div class="contact-form">
-                <form class="form">
-                  <div class="form-group">
-                    <label for="name">Name</label>
-                    <input type="text" id="name" name="name" required />
-                  </div>
-                  <div class="form-group">
-                    <label for="email">Email</label>
-                    <input type="email" id="email" name="email" required />
-                  </div>
-                  <div class="form-group">
-                    <label for="message">Message</label>
-                    <textarea
-                      id="message"
-                      name="message"
-                      rows="5"
-                      required
-                    ></textarea>
-                  </div>
-                  <button type="submit" class="btn primary">
-                    Send Message
-                  </button>
-                </form>
-              </div>
+            <p class="contact-tagline">
+              I am always ready for nothing — but ping me if something breaks
+              and I will just restart the server.
+            </p>
+            <div id="contact-methods" class="contact-cards">
+              <!-- Populated by portfolio.js from data/portfolio-data.js -->
             </div>
           </div>
         </section>
@@ -461,6 +364,7 @@
     </div> -->
 
     <!-- Scripts -->
+    <script src="./data/portfolio-data.js"></script>
     <script src="./portfolio.js"></script>
   </body>
 </html>

@@ -38,9 +38,93 @@ class HybridPortfolio {
     this.setupThemeSelector();
     this.setupNavigation();
     this.typewriterEffect();
+    this.renderSkills();
+    this.renderProjects();
+    this.renderContact();
+    this.renderLandingSocials();
 
     // Initialize with landing screen
     this.showInterface("landing");
+  }
+
+  renderLandingSocials() {
+    const el = document.getElementById("landing-social-links");
+    if (!el) return;
+    const p = window.PORTFOLIO_DATA.profile;
+    el.innerHTML = `
+      <a href="${p.social.github.url}" target="_blank" title="GitHub"><i class="fab fa-github"></i></a>
+      <a href="mailto:${p.email}" title="Email"><i class="fas fa-envelope"></i></a>
+    `;
+  }
+
+  renderContact() {
+    const el = document.getElementById("contact-methods");
+    if (!el) return;
+    const p = window.PORTFOLIO_DATA.profile;
+    const cards = [
+      { icon: "fas fa-envelope", label: "Email", value: p.email, href: `mailto:${p.email}`, external: false },
+      { icon: "fab fa-github",   label: "GitHub", value: `/${p.social.github.handle}`, href: p.social.github.url, external: true },
+      { icon: "fab fa-linkedin", label: "LinkedIn", value: `/${p.social.linkedin.handle}`, href: p.social.linkedin.url, external: true },
+    ];
+    el.innerHTML = cards.map((c) => `
+      <a href="${c.href}" ${c.external ? 'target="_blank"' : ""} class="contact-card">
+        <div class="contact-card-icon"><i class="${c.icon}"></i></div>
+        <div class="contact-card-body">
+          <span class="contact-card-label">${c.label}</span>
+          <span class="contact-card-value">${c.value}</span>
+        </div>
+        <i class="fas fa-arrow-right contact-card-arrow"></i>
+      </a>
+    `).join("");
+  }
+
+  renderSkills() {
+    const grid = document.getElementById("skills-grid");
+    if (!grid) return;
+    grid.innerHTML = window.PORTFOLIO_DATA.skills.categories
+      .map(
+        (cat) => `
+      <div class="skill-category">
+        <h3 class="category-title"><i class="${cat.icon}"></i> ${cat.title}</h3>
+        <div class="skill-list">
+          ${cat.tags.map((tag) => `<span class="skill-tag">${tag}</span>`).join("")}
+        </div>
+      </div>`
+      )
+      .join("");
+  }
+
+  renderProjects() {
+    const grid = document.getElementById("projects-grid");
+    if (!grid) return;
+    grid.innerHTML = window.PORTFOLIO_DATA.projects
+      .map((p) => {
+        const typeBadge =
+          p.type === "fork"
+            ? `<span class="project-badge fork">fork</span>`
+            : `<span class="project-badge personal">personal</span>`;
+        const liveLink = p.url
+          ? `<a href="${p.url}" target="_blank" class="project-link" title="Live site"><i class="fas fa-external-link-alt"></i></a>`
+          : "";
+        const repoLink = p.repo
+          ? `<a href="${p.repo}" target="_blank" class="project-link" title="GitHub repo"><i class="fab fa-github"></i></a>`
+          : "";
+        return `
+        <div class="project-card">
+          <div class="project-header">
+            <div>
+              <h3 class="project-title">${p.name}</h3>
+              ${typeBadge}
+            </div>
+            <div class="project-links">${liveLink}${repoLink}</div>
+          </div>
+          <p class="project-description">${p.description}</p>
+          <div class="project-tech">
+            ${p.tech.map((t) => `<span class="tech-tag">${t}</span>`).join("")}
+          </div>
+        </div>`;
+      })
+      .join("");
   }
 
   /* ===== THEME MANAGEMENT ===== */
@@ -315,122 +399,75 @@ Available commands:
   }
 
   whoami() {
+    const p = window.PORTFOLIO_DATA.profile;
     return `<div class="terminal-info">
-User: Sithu Kyaw
-Role: Professional Trash Pretending to be Engineer-ish
-Status: Available for projects
+User: ${p.name}
+Role: ${p.title}
+Status: ${p.status}
 Location: ~/portfolio
 Shell: /bin/bash
 </div>`;
   }
 
   aboutCommand() {
+    const p = window.PORTFOLIO_DATA.profile;
     return `<div class="terminal-info">
-About Sithu Kyaw:
+About ${p.name}:
 ━━━━━━━━━━━━━━━━━━
-I'm a passionate full-stack developer with 3+ years of experience
-building modern web applications. I enjoy creating efficient, 
-scalable solutions and exploring new technologies.
-
-Expertise:
-• Frontend: React, Vue.js, JavaScript, TypeScript
-• Backend: Node.js, Python, Django, Express
-• Database: PostgreSQL, MongoDB, Redis
-• Tools: Docker, AWS, Git, Linux
-
-When not coding, I contribute to open source projects and
-share knowledge with the developer community.
+${p.bio.join("\n\n")}
 </div>`;
   }
 
   skillsCommand() {
-    return `<div class="terminal-skills">
-Technical Skills:
-━━━━━━━━━━━━━━━━
+    const constellation = window.PORTFOLIO_DATA.skills.constellation;
+    const bar = (level) => {
+      const filled = Math.round((level / 100) * 12);
+      const label = level >= 90 ? "Expert" : level >= 80 ? "Advanced" : "Intermediate";
+      return `${"█".repeat(filled)}${"░".repeat(12 - filled)} ${label}`;
+    };
 
-Frontend Technologies:
-├── HTML5/CSS3        ████████████ Expert
-├── JavaScript        ████████████ Expert  
-├── TypeScript        ██████████░░ Advanced
-├── React.js          ████████████ Expert
-├── Vue.js            ██████████░░ Advanced
-└── Sass/Less         ████████████ Expert
-
-Backend Technologies:
-├── Node.js           ████████████ Expert
-├── Python            ██████████░░ Advanced
-├── Express.js        ████████████ Expert
-├── Django            ████████░░░░ Intermediate
-└── REST APIs         ████████████ Expert
-
-Databases:
-├── PostgreSQL        ██████████░░ Advanced
-├── MongoDB           ████████████ Expert
-├── Redis             ████████░░░░ Intermediate
-└── MySQL             ██████████░░ Advanced
-
-DevOps & Tools:
-├── Git               ████████████ Expert
-├── Docker            ██████████░░ Advanced
-├── AWS               ████████░░░░ Intermediate
-├── Linux             ████████████ Expert
-└── CI/CD             ████████░░░░ Intermediate
-</div>`;
+    const lines = ["<div class=\"terminal-skills\">Technical Skills:\n━━━━━━━━━━━━━━━━"];
+    Object.entries(constellation).forEach(([category, data]) => {
+      lines.push(`\n${category}:`);
+      data.skills.forEach((skill, i) => {
+        const prefix = i === data.skills.length - 1 ? "└──" : "├──";
+        lines.push(`${prefix} ${skill.name.padEnd(16)} ${bar(skill.level)}`);
+      });
+    });
+    lines.push("</div>");
+    return lines.join("\n");
   }
 
   projectsCommand() {
-    return `<div class="terminal-projects">
-Featured Projects:
-━━━━━━━━━━━━━━━━━
-
-1. Terminal Portfolio
-   ├── Description: Interactive terminal-style portfolio
-   ├── Tech Stack: JavaScript, CSS3, HTML5
-   ├── Features: Command-line interface, theme switching
-   └── Status: ✅ Complete
-
-2. Full-Stack Web Application  
-   ├── Description: Modern web app with responsive design
-   ├── Tech Stack: React, Node.js, MongoDB
-   ├── Features: Authentication, real-time updates
-   └── Status: ✅ Complete
-
-3. RESTful API Service
-   ├── Description: Scalable API with comprehensive docs
-   ├── Tech Stack: Python, Django, PostgreSQL
-   ├── Features: JWT auth, caching, rate limiting
-   └── Status: ✅ Complete
-
-4. DevOps Automation
-   ├── Description: CI/CD pipeline automation
-   ├── Tech Stack: Docker, AWS, GitHub Actions
-   ├── Features: Auto deployment, monitoring
-   └── Status: 🚧 In Progress
-
-Type 'website' to view detailed project information.
-</div>`;
+    const projects = window.PORTFOLIO_DATA.projects;
+    const lines = ["<div class=\"terminal-projects\">Projects:\n━━━━━━━━━━"];
+    projects.forEach((p, i) => {
+      const typeTag = p.type === "fork" ? "[fork]" : "[personal]";
+      const statusIcon = p.status === "live" ? "✅" : "🚧";
+      lines.push(`\n${i + 1}. ${p.name} ${typeTag}`);
+      lines.push(`   ├── ${p.description}`);
+      lines.push(`   ├── Tech: ${p.tech.join(", ")}`);
+      if (p.url) lines.push(`   ├── Live: ${p.url}`);
+      if (p.repo) lines.push(`   ├── Repo: ${p.repo}`);
+      lines.push(`   └── Status: ${statusIcon} ${p.status}`);
+    });
+    lines.push("</div>");
+    return lines.join("\n");
   }
 
   contactCommand() {
+    const p = window.PORTFOLIO_DATA.profile;
     return `<div class="terminal-contact">
 Contact Information:
 ━━━━━━━━━━━━━━━━━━━
 
-📧 Email:    sithukyaw27500@gmail.com
-🐙 GitHub:   github.com/Sithukyaw666  
-🐦 Twitter:  @Sithukyaw666
-💼 LinkedIn: (Available on request)
+📧 Email:    ${p.email}
+🐙 GitHub:   github.com/${p.social.github.handle}
+💼 LinkedIn: linkedin.com/in/${p.social.linkedin.handle}
 
 Status: 🟢 Available for projects
 Response Time: Usually within 24 hours
-
-Feel free to reach out for:
-• Project collaborations
-• Freelance opportunities  
-• Technical discussions
-• Open source contributions
-
-PGP Key: Available on request
+Timezone: ${p.timezone}
 </div>`;
   }
 

@@ -630,6 +630,29 @@ body {
   font-size: 12px;
 }
 
+.project-type-badge {
+  font-size: 10px;
+  font-weight: 700;
+  padding: 2px 6px;
+  border-radius: 4px;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  vertical-align: middle;
+  margin-left: 8px;
+}
+
+.project-type-badge.personal {
+  background: rgba(137, 180, 250, 0.2);
+  color: var(--primary);
+  border: 1px solid rgba(137, 180, 250, 0.4);
+}
+
+.project-type-badge.fork {
+  background: rgba(249, 226, 175, 0.2);
+  color: var(--accent);
+  border: 1px solid rgba(249, 226, 175, 0.4);
+}
+
 .project-description {
   color: var(--terminal-text);
   margin-bottom: 15px;
