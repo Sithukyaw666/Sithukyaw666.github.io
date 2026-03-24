@@ -1,0 +1,9 @@
+[
+  {
+    "slug": "hello-world",
+    "title": "Hello, World",
+    "date": "2026-03-24",
+    "excerpt": "A quick note on why I'm adding a blog to my portfolio and what I plan to yap about.",
+    "tags": ["meta", "intro"]
+  }
+]
