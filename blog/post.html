@@ -19,6 +19,7 @@
       href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
     />
     <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.min.js"></script>
 
     <style>
       .post-wrapper {
@@ -175,6 +176,12 @@
         font-weight: 600;
       }
 
+      .prose .mermaid {
+        display: flex;
+        justify-content: center;
+        margin: var(--space-8) 0;
+      }
+
       .state-message {
         text-align: center;
         color: var(--text-muted);
@@ -226,6 +233,22 @@
     </div>
 
     <script>
+      mermaid.initialize({
+        startOnLoad: false,
+        theme: 'dark',
+        themeVariables: {
+          background: '#1e1e2e',
+          primaryColor: '#313244',
+          primaryTextColor: '#cdd6f4',
+          primaryBorderColor: '#45475a',
+          lineColor: '#6c7086',
+          secondaryColor: '#181825',
+          edgeLabelBackground: '#1e1e2e',
+          fontSize: '14px',
+          fontFamily: 'var(--font-mono)',
+        }
+      });
+
       const params = new URLSearchParams(window.location.search);
       const slug = params.get("slug");
 
@@ -262,6 +285,15 @@
             const body = document.getElementById("post-body");
             body.style.display = "block";
             body.innerHTML = marked.parse(md);
+
+            document.querySelectorAll('pre code.language-mermaid').forEach((block) => {
+              const pre = block.parentElement;
+              const div = document.createElement('div');
+              div.className = 'mermaid';
+              div.textContent = block.textContent;
+              pre.replaceWith(div);
+            });
+            mermaid.run();
           })
           .catch(() => {
             document.getElementById("loading").style.display = "none";

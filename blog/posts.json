@@ -1,5 +1,13 @@
 [
   {
+    "slug": "l4-loadbalancer",
+    "title": "I Built Two L4 Load Balancers Because One Wasn't Enough to Confuse Me",
+    "date": "2026-04-14",
+    "excerpt": "Just yapping what i did by copying others.",
+    "tags": ["networking", "ebpf", "iptables", "linux"]
+  },
+
+  {
     "slug": "hello-world",
     "title": "Hello, World",
     "date": "2026-03-24",
