@@ -180,15 +180,6 @@ Also, we're not benchmarking the backend. It's a dummy Python HTTP server. Backe
 
 ## Summary
 
-```mermaid
-xychart-beta
-    title "Summary (higher = better)"
-    x-axis ["Throughput", "Latency", "Timeouts", "Bandwidth"]
-    y-axis 0 --> 1.5
-    bar [1.34, 1.0, 1.0, 1.0]
-    bar [1.0, 0.31, 0.39, 0.33]
-```
-
 eBPF wins on every number: 34% more throughput, 3.3× lower latency, 2.5× fewer timeouts, 3× less bandwidth on the LB node. The iptables LB degrades under sustained load due to conntrack table pressure that would improve significantly with better timeout settings. The eBPF LB stays flat throughout.
 
 The gap breaks down roughly as: half of it is DSR (eBPF never handles return traffic), a third is conntrack implementation quality (BPF LRU vs kernel hash table with global spinlocks), and the rest is stack bypass. At higher concurrency all three factors amplify.
