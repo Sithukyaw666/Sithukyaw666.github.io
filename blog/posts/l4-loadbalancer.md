@@ -222,7 +222,7 @@ static __always_inline __u16 recalc_ip_checksum(struct iphdr *ip) {
 }
 ```
 
-Four iterations because carry can cascade. `#pragma unroll` because the BPF verifier does not allow loops it can't reason about statically.
+Four iterations because carry can cascade. `#pragma unroll` tells the compiler to unroll the loop — instead of compare → do stuff → jump → compare, it just emits the body four times flat, no branching. The BPF verifier isn't allergic to loops outright, it just gets nervous about anything that could be infinite. Unrolling makes the loop disappear at the machine code level so the verifier never has to think about it.
 
 The ethernet FCS does _not_ need to be recalculated after updating the MAC addresses. The NIC hardware recomputes it automatically on transmit.
 

@@ -1,0 +1,90 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="630" viewBox="0 0 1200 630">
+  <defs>
+    <pattern id="grid" width="36" height="36" patternUnits="userSpaceOnUse">
+      <circle cx="18" cy="18" r="1.2" fill="#313244"/>
+    </pattern>
+    <linearGradient id="fade-left" x1="0" x2="1" y1="0" y2="0">
+      <stop offset="0%"  stop-color="#1e1e2e" stop-opacity="1"/>
+      <stop offset="55%" stop-color="#1e1e2e" stop-opacity="0"/>
+    </linearGradient>
+  </defs>
+
+  <!-- Base -->
+  <rect width="1200" height="630" fill="#1e1e2e"/>
+  <rect width="1200" height="630" fill="url(#grid)"/>
+
+  <!-- Network graph — packets going nowhere -->
+  <g stroke="#45475a" stroke-width="1" fill="none" opacity="0.7">
+    <line x1="910" y1="105" x2="1080" y2="195"/>
+    <line x1="910" y1="105" x2="780"  y2="255"/>
+    <line x1="1080" y1="195" x2="1010" y2="340"/>
+    <line x1="780"  y1="255" x2="1010" y2="340"/>
+    <line x1="780"  y1="255" x2="860"  y2="440"/>
+    <line x1="1010" y1="340" x2="1120" y2="460"/>
+    <line x1="860"  y1="440" x2="1120" y2="460"/>
+    <line x1="860"  y1="440" x2="820"  y2="570"/>
+    <line x1="1120" y1="460" x2="1080" y2="195"/>
+    <line x1="1010" y1="340" x2="860"  y2="440"/>
+  </g>
+  <g fill="none" stroke="#6c7086" stroke-width="1.5" opacity="0.5">
+    <circle cx="910"  cy="105" r="7"/>
+    <circle cx="1080" cy="195" r="5"/>
+    <circle cx="780"  cy="255" r="9"/>
+    <circle cx="1010" cy="340" r="6"/>
+    <circle cx="860"  cy="440" r="8"/>
+    <circle cx="1120" cy="460" r="5"/>
+    <circle cx="820"  cy="570" r="5"/>
+  </g>
+  <!-- All nodes disconnected — listening: 0 -->
+  <circle cx="780" cy="255" r="4" fill="#f38ba8" opacity="0.45"/>
+  <circle cx="860" cy="440" r="4" fill="#f38ba8" opacity="0.35"/>
+
+  <!-- /dev/null label on the graph — the destination -->
+  <text font-family="'Courier New', Courier, monospace" font-size="14"
+        fill="#45475a" x="1040" y="82" opacity="0.7">/dev/null</text>
+  <line x1="910" y1="88" x2="1035" y2="78" stroke="#45475a" stroke-width="1"
+        stroke-dasharray="3,3" opacity="0.5"/>
+
+  <!-- Fade overlay -->
+  <rect width="1200" height="630" fill="url(#fade-left)"/>
+
+  <!-- Left accent bar -->
+  <rect x="0" y="0" width="4" height="630" fill="#cba6f7"/>
+
+  <!-- Sarcastic prompt -->
+  <text font-family="'Courier New', Courier, monospace" font-size="22" x="72" y="178">
+    <tspan fill="#a6e3a1">❯</tspan>
+    <tspan fill="#45475a" dx="8">talking to /dev/null, again</tspan>
+  </text>
+
+  <!-- Hairline top -->
+  <rect x="72" y="198" width="600" height="1" fill="#313244"/>
+
+  <!-- domain (small, subtle) -->
+  <text
+    font-family="'Courier New', Courier, monospace"
+    font-size="22"
+    fill="#45475a"
+    x="76"
+    y="268">sithukyaw.me</text>
+
+  <!-- /blog (main) -->
+  <text
+    font-family="'Courier New', Courier, monospace"
+    font-size="118"
+    font-weight="bold"
+    fill="#cba6f7"
+    letter-spacing="-2"
+    x="72"
+    y="408">/ blog</text>
+
+  <!-- Hairline bottom -->
+  <rect x="72" y="432" width="600" height="1" fill="#313244"/>
+
+  <!-- Sarcastic stats -->
+  <text font-family="'Courier New', Courier, monospace" font-size="19"
+        fill="#45475a" letter-spacing="0.3" x="72" y="472">
+    <tspan fill="#f38ba8">packets sent: ∞</tspan>
+    <tspan fill="#45475a">  ·  listeners: 0  ·  still going</tspan>
+  </text>
+</svg>

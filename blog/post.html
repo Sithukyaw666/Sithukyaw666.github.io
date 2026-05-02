@@ -5,6 +5,18 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Post — Sithu Kyaw</title>
 
+    <!-- Open Graph / Twitter Card -->
+    <meta property="og:type"        content="article" />
+    <meta property="og:site_name"   content="Sithu Kyaw" />
+    <meta property="og:title"       content="Sithu Kyaw — Blog" />
+    <meta property="og:description" content="" />
+    <meta property="og:url"         content="" />
+    <meta property="og:image"       content="https://sithukyaw.me/blog/og-image.png" />
+    <meta name="twitter:card"        content="summary_large_image" />
+    <meta name="twitter:title"       content="Sithu Kyaw — Blog" />
+    <meta name="twitter:description" content="" />
+    <meta name="twitter:image"       content="https://sithukyaw.me/blog/og-image.png" />
+
     <!-- Apply theme before render to avoid flash -->
     <script>
       document.documentElement.setAttribute(
@@ -180,6 +192,57 @@
         display: flex;
         justify-content: center;
         margin: var(--space-8) 0;
+        padding-bottom: var(--space-6);
+        overflow: visible;
+      }
+
+      .prose .mermaid svg {
+        overflow: visible;
+      }
+
+      .share-bar {
+        display: flex;
+        align-items: center;
+        gap: var(--space-3);
+        flex-wrap: wrap;
+        padding: var(--space-6) 0 var(--space-2);
+        border-top: 1px solid var(--border-subtle);
+        margin-top: var(--space-12);
+        font-family: var(--font-mono);
+      }
+
+      .share-label {
+        font-size: var(--font-size-sm);
+        color: var(--text-muted);
+        margin-right: var(--space-1);
+      }
+
+      .share-chip {
+        display: inline-flex;
+        align-items: center;
+        gap: 6px;
+        padding: 4px 14px;
+        background: var(--bg-surface);
+        border: 1px solid var(--border);
+        border-radius: 999px;
+        color: var(--text-secondary);
+        cursor: pointer;
+        font-family: var(--font-mono);
+        font-size: var(--font-size-xs);
+        text-decoration: none;
+        transition: border-color 0.15s, color 0.15s;
+        line-height: 1.6;
+      }
+
+      .share-chip:hover {
+        border-color: var(--primary);
+        color: var(--primary);
+        text-decoration: none;
+      }
+
+      .share-chip.copied {
+        border-color: #a6e3a1;
+        color: #a6e3a1;
       }
 
       .state-message {
@@ -294,6 +357,46 @@
               pre.replaceWith(div);
             });
             mermaid.run();
+
+            // Populate OG / Twitter meta tags
+            const url = window.location.href;
+            if (meta) {
+              document.querySelector('meta[property="og:title"]').content       = meta.title;
+              document.querySelector('meta[property="og:description"]').content = meta.excerpt || '';
+              document.querySelector('meta[property="og:url"]').content         = url;
+              document.querySelector('meta[name="twitter:title"]').content       = meta.title;
+              document.querySelector('meta[name="twitter:description"]').content = meta.excerpt || '';
+            }
+
+            // Inject share bar
+            const tweetUrl   = encodeURIComponent(url);
+            const tweetTitle = encodeURIComponent((meta?.title || 'Check this out') + ' — ');
+            const shareBar   = document.createElement('div');
+            shareBar.className = 'share-bar';
+            shareBar.innerHTML = `
+              <span class="share-label">share →</span>
+              <button class="share-chip" id="copy-link-btn">
+                <i class="fas fa-link"></i> copy link
+              </button>
+              <a class="share-chip"
+                 href="https://x.com/intent/tweet?text=${tweetTitle}&url=${tweetUrl}"
+                 target="_blank" rel="noopener noreferrer">
+                <i class="fab fa-x-twitter"></i> post on x
+              </a>
+            `;
+            body.after(shareBar);
+
+            document.getElementById('copy-link-btn').addEventListener('click', () => {
+              navigator.clipboard.writeText(url).then(() => {
+                const btn = document.getElementById('copy-link-btn');
+                btn.innerHTML = '<i class="fas fa-check"></i> copied!';
+                btn.classList.add('copied');
+                setTimeout(() => {
+                  btn.innerHTML = '<i class="fas fa-link"></i> copy link';
+                  btn.classList.remove('copied');
+                }, 2000);
+              });
+            });
           })
           .catch(() => {
             document.getElementById("loading").style.display = "none";
