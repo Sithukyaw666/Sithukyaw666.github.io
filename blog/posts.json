@@ -1,5 +1,12 @@
 [
   {
+    "slug": "ai-guardrails",
+    "title": "The Guardrail Industry need no no crab",
+    "date": "2026-05-08",
+    "excerpt": "LLMs don't understand consequences of their actions",
+    "tags": ["ebpf", "security", "ai", "linux", "agents"]
+  },
+  {
     "slug": "l4-loadbalancer-benchmark",
     "title": "I Ran wrk Against Both My Load Balancers",
     "date": "2026-05-02",
@@ -10,7 +17,7 @@
     "slug": "l4-loadbalancer",
     "title": "I Built Two L4 Load Balancers Because One Wasn't Enough to Confuse Me",
     "date": "2026-04-14",
-    "excerpt": "Just yapping what i did by copying others.",
+    "excerpt": "Understanding K8s networking stuff.",
     "tags": ["networking", "ebpf", "iptables", "linux"]
   }
 ]

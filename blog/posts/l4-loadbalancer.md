@@ -1,7 +1,3 @@
-# I Built Two L4 Load Balancers Because One Wasn't Enough to Confuse Me
-
----
-
 ```mermaid
 flowchart BT
     NIC["NIC"]

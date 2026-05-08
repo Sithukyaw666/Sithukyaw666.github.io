@@ -1,7 +1,3 @@
-# I Ran wrk Against Both My Load Balancers
-
----
-
 [Part one](/blog/post.html?slug=l4-loadbalancer) was about building them. This is about performance measurement.
 
 I pointed `wrk` at both load balancers — same hardware, same backends, same test duration — and collected everything: throughput, latency, timeouts, CPU, bandwidth. The eBPF one won every metric.
