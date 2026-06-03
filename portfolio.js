@@ -260,21 +260,29 @@ class HybridPortfolio {
     }
   }
 
-  //   /* ===== TERMINAL WIDGET ===== */
-  //   openTerminalWidget() {
-  //     const widget = document.getElementById("terminal-widget");
-  //     if (widget) {
-  //       widget.classList.remove("hidden");
-  //       const input = document.getElementById("widget-input");
-  //       if (input) input.focus();
+  /* ===== TERMINAL WIDGET ===== */
+  openTerminalWidget() {
+    const widget = document.getElementById("terminal-widget");
+    if (widget) {
+      widget.classList.remove("hidden");
+      const input = document.getElementById("widget-input");
+      if (input) input.focus();
 
-  //       // Initialize terminal widget if not already done
-  //       if (!widget.dataset.initialized) {
-  //         this.initTerminalWidget();
-  //         widget.dataset.initialized = "true";
-  //       }
-  //     }
-  //   }
+      if (!widget.dataset.initialized) {
+        this.initTerminalWidget();
+        widget.dataset.initialized = "true";
+      }
+    }
+  }
+
+  toggleTerminalWidget() {
+    const widget = document.getElementById("terminal-widget");
+    if (widget && widget.classList.contains("hidden")) {
+      this.openTerminalWidget();
+    } else {
+      this.closeTerminalWidget();
+    }
+  }
 
   closeTerminalWidget() {
     const widget = document.getElementById("terminal-widget");
@@ -325,7 +333,7 @@ class HybridPortfolio {
     // Display command
     this.appendToTerminal(
       output,
-      `<div class="terminal-command">guest@portfolio:~$ ${command}</div>`
+      `<div class="terminal-command"><span class="tw-prompt-path">~</span><span class="tw-prompt-arrow"> ❯</span> ${command}</div>`
     );
 
     const [cmd, ...args] = command.toLowerCase().split(" ");
@@ -368,34 +376,26 @@ class HybridPortfolio {
   /* ===== TERMINAL COMMANDS ===== */
   getWelcomeMessage() {
     return `<div class="terminal-welcome">
-╭─ Terminal Widget - Sithu Kyaw Portfolio ─╮
-│  Type 'help' for available commands       │
-│  Type 'website' to return to main site    │
-╰───────────────────────────────────────────╯
+<span class="tw-ghost">👻</span> <span class="tw-user">guest<span class="tw-at">@</span>sithukyaw</span>
+<span class="tw-hint">type <span class="tw-cmd">help</span> for commands · <span class="tw-cmd">website</span> to go back</span>
 </div>`;
   }
 
   showHelp() {
-    return `<div class="terminal-help">
-Available commands:
-  help        - Show this help message
-  clear       - Clear the terminal
-  whoami      - Display user information
-  about       - About Sithu Kyaw
-  skills      - List technical skills
-  projects    - Show featured projects
-  contact     - Display contact information
-  theme <name> - Change theme (mocha|latte|frappe|macchiato)
-  website     - Switch to traditional website
-  terminal    - Open full terminal interface
-  ls          - List directory contents
-  cat <file>  - Display file contents
-  pwd         - Show current directory
-  history     - Show command history
-  date        - Display current date
-  echo <text> - Echo text
-  exit        - Close terminal widget
-</div>`;
+    const cmds = [
+      ['about',    'who dis'],
+      ['skills',   'tech stack'],
+      ['projects', 'things built'],
+      ['contact',  'reach out'],
+      ['theme',    'mocha|latte|frappe|macchiato'],
+      ['terminal', 'full terminal'],
+      ['website',  'go back'],
+      ['clear',    'clean slate'],
+    ];
+    const rows = cmds.map(([c, d]) =>
+      `<div class="tw-help-row"><span class="tw-cmd">${c}</span><span class="tw-help-desc">${d}</span></div>`
+    ).join('');
+    return `<div class="tw-help-grid">${rows}</div>`;
   }
 
   whoami() {
@@ -768,14 +768,24 @@ function closeTerminalWidget() {
 /* ===== INITIALIZATION ===== */
 document.addEventListener("DOMContentLoaded", () => {
   portfolioInstance = new HybridPortfolio();
+  portfolioInstance.showInterface("traditional");
 
-  // Handle URL hash navigation
+  document.addEventListener("keydown", (e) => {
+    const tag = document.activeElement.tagName;
+    if (tag === "INPUT" || tag === "TEXTAREA") return;
+    if (e.key === "`") {
+      e.preventDefault();
+      portfolioInstance.toggleTerminalWidget();
+    }
+    if (e.key === "Escape") {
+      portfolioInstance.closeTerminalWidget();
+    }
+  });
+
   if (window.location.hash) {
     const targetId = window.location.hash.substring(1);
     const targetElement = document.getElementById(targetId);
     if (targetElement) {
-      // Show traditional interface if navigating to a section
-      portfolioInstance.showInterface("traditional");
       setTimeout(() => {
         targetElement.scrollIntoView({ behavior: "smooth" });
       }, 100);
@@ -795,7 +805,7 @@ window.addEventListener("popstate", (e) => {
       }, 100);
     }
   } else if (portfolioInstance) {
-    portfolioInstance.showInterface("landing");
+    portfolioInstance.showInterface("traditional");
   }
 });
 

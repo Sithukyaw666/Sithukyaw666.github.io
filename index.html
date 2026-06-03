@@ -209,9 +209,17 @@
             <li><a href="./blog/" class="nav-link">Blog</a></li>
           </ul>
           <div class="nav-actions">
-            <button class="mode-toggle" onclick="showLanding()">
-              <i class="fas fa-home"></i>
-              Home
+            <button class="theme-btn" data-theme="mocha" title="Dark">
+              <i class="fas fa-moon"></i>
+            </button>
+            <button class="theme-btn" data-theme="latte" title="Light">
+              <i class="fas fa-sun"></i>
+            </button>
+            <button class="theme-btn" data-theme="frappe" title="Cool">
+              <i class="fas fa-snowflake"></i>
+            </button>
+            <button class="theme-btn" data-theme="macchiato" title="Warm">
+              <i class="fas fa-mug-hot"></i>
             </button>
             <button class="terminal-toggle" onclick="enterTerminal()">
               <i class="fas fa-terminal"></i>
@@ -363,31 +371,30 @@
       </footer>
     </div>
 
-    <!-- Terminal Widget
+    <!-- Terminal Widget -->
     <div id="terminal-widget" class="terminal-widget hidden">
       <div class="widget-header">
-        <span class="widget-title">
-          <i class="fas fa-terminal"></i>
-          Terminal
-        </span>
-        <button class="widget-close" onclick="closeTerminalWidget()">
-          <i class="fas fa-times"></i>
-        </button>
+        <div class="widget-dots">
+          <span class="wdot close" onclick="closeTerminalWidget()"></span>
+          <span class="wdot minimize"></span>
+          <span class="wdot maximize"></span>
+        </div>
+        <span class="widget-title">~ <span class="widget-hint">` to toggle</span></span>
+        <div style="width:52px"></div>
       </div>
       <div class="widget-body">
         <div class="terminal-output" id="widget-output"></div>
         <div class="terminal-input-line">
-          <span class="terminal-prompt">guest@portfolio:~$ </span>
+          <span class="terminal-prompt"><span class="tw-prompt-path">~</span><span class="tw-prompt-arrow"> ❯</span> </span>
           <input
             type="text"
             id="widget-input"
             class="terminal-input"
             autocomplete="off"
           />
-          <span class="terminal-cursor">█</span>
         </div>
       </div>
-    </div> -->
+    </div>
 
     <!-- Scripts -->
     <script src="./data/portfolio-data.js"></script>

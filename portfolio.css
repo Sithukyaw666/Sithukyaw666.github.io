@@ -1298,6 +1298,11 @@ body {
 }
 
 /* ===== TERMINAL WIDGET ===== */
+@keyframes widget-slide-in {
+  from { opacity: 0; transform: translateY(20px) scale(0.97); }
+  to   { opacity: 1; transform: translateY(0)   scale(1);    }
+}
+
 .terminal-widget {
   position: fixed;
   bottom: var(--space-8);
@@ -1314,11 +1319,39 @@ body {
   overflow: hidden;
   min-width: 400px;
   min-height: 250px;
+  animation: widget-slide-in 0.18s ease;
 }
+
+.widget-hint {
+  font-size: 0.65rem;
+  color: var(--text-muted);
+  opacity: 0.5;
+  margin-left: var(--space-2);
+  font-weight: normal;
+}
+
+.widget-dots {
+  display: flex;
+  gap: 6px;
+  align-items: center;
+}
+
+.wdot {
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  cursor: pointer;
+  transition: opacity 0.15s;
+}
+
+.wdot.close    { background: #ff5f57; }
+.wdot.minimize { background: #ffbd2e; }
+.wdot.maximize { background: #28ca42; }
+.wdot:hover    { opacity: 0.75; }
 
 .widget-header {
   background: var(--bg-tertiary);
-  padding: var(--space-3) var(--space-4);
+  padding: var(--space-2) var(--space-4);
   border-bottom: 1px solid var(--border);
   display: flex;
   justify-content: space-between;
@@ -1326,21 +1359,10 @@ body {
 }
 
 .widget-title {
-  display: flex;
-  align-items: center;
-  gap: var(--space-2);
-  color: var(--text-primary);
-  font-size: var(--font-size-sm);
-}
-
-.widget-close {
-  background: none;
-  border: none;
   color: var(--text-muted);
-  cursor: pointer;
-  padding: var(--space-1);
-  border-radius: var(--border-radius);
-  transition: var(--transition);
+  font-size: var(--font-size-sm);
+  font-family: var(--font-mono);
+  opacity: 0.6;
 }
 
 .widget-close:hover {
@@ -1370,9 +1392,49 @@ body {
 }
 
 .terminal-prompt {
-  color: var(--success);
-  font-weight: 500;
   flex-shrink: 0;
+}
+
+/* widget welcome message */
+.terminal-welcome {
+  margin-bottom: var(--space-3);
+  line-height: 1.8;
+}
+
+.tw-ghost { font-size: 1.1em; }
+.tw-user  { color: var(--text-primary); font-weight: 600; }
+.tw-at    { color: var(--success); }
+.tw-hint  { font-size: 0.78rem; color: var(--text-muted); display: block; margin-top: 2px; }
+.tw-cmd   { color: var(--primary); }
+
+.tw-help-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 2px 16px;
+  margin: 4px 0;
+}
+
+.tw-help-row {
+  display: flex;
+  gap: 8px;
+  align-items: baseline;
+  font-size: var(--font-size-sm);
+}
+
+.tw-help-desc {
+  color: var(--text-muted);
+  font-size: 0.75rem;
+  opacity: 0.6;
+}
+
+/* widget prompt */
+.tw-prompt-path  { color: var(--primary); font-weight: 500; }
+.tw-prompt-arrow { color: var(--success); font-weight: 600; }
+
+/* widget command echo */
+.terminal-command {
+  color: var(--text-muted);
+  margin-bottom: 2px;
 }
 
 .terminal-input {
@@ -1383,6 +1445,7 @@ body {
   color: var(--text-primary);
   font-family: var(--font-mono);
   font-size: var(--font-size-sm);
+  caret-color: var(--success);
 }
 
 .terminal-cursor {

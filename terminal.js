@@ -9,7 +9,7 @@ class TerminalPortfolio {
     this.historyIndex = -1;
     this.currentPath = "~";
     this.currentUser = "guest";
-    this.currentHost = "fedora";
+    this.currentHost = "sithukyaw";
 
     // Available commands
     this.commands = {
@@ -38,6 +38,8 @@ class TerminalPortfolio {
       echo: this.echo.bind(this),
       tree: this.showTree.bind(this),
       website: this.switchToWebsite.bind(this),
+      uybai:   this.uybCommand.bind(this),
+      uyb:     this.uybCommand.bind(this),
     };
 
     // File system simulation
@@ -92,6 +94,8 @@ class TerminalPortfolio {
     this.themes = ["mocha", "latte", "frappe", "macchiato"];
     this.currentTheme = "mocha";
     this.startTime = Date.now();
+    this.uybMode = false;
+    this.uybStats = { queries: 0, totalSteps: 0, totalSecs: 0 };
 
     this.init();
   }
@@ -190,7 +194,12 @@ class TerminalPortfolio {
     switch (e.key) {
       case "Enter":
         e.preventDefault();
-        this.executeCommand(input.value.trim());
+        const val = input.value.trim();
+        if (this.uybMode) {
+          this.processUybInput(val);
+        } else {
+          this.executeCommand(val);
+        }
         input.value = "";
         this.hideSuggestions();
         break;
@@ -628,6 +637,11 @@ class TerminalPortfolio {
     if (this.themes.includes(newTheme)) {
       this.currentTheme = newTheme;
       document.documentElement.setAttribute("data-theme", newTheme);
+      const label = `Catppuccin ${newTheme.charAt(0).toUpperCase() + newTheme.slice(1)}`;
+      ["neofetch-theme", "status-theme-label"].forEach(id => {
+        const el = document.getElementById(id);
+        if (el) el.textContent = label;
+      });
       this.addOutput(`Theme changed to: ${newTheme}`, "success");
     } else {
       this.addOutput(
@@ -656,20 +670,171 @@ class TerminalPortfolio {
   }
 
   showSystemInfo() {
-    this.addOutput(
-      `
-╭─────────────────────────────────────────────────────────────╮
-│                       STK Terminal v2.1                    │
-├─────────────────────────────────────────────────────────────┤
-│ OS: Fedora Linux (Terminal Simulation)                     │
-│ Shell: Cyberpunk Terminal v2.1                            │
-│ Theme: ${this.currentTheme.padEnd(48)} │
-│ Uptime: ${Math.floor((Date.now() - this.startTime) / 1000)}s${" ".repeat(45)}│
-│ User: ${this.currentUser}@${this.currentHost}${" ".repeat(41)} │
-│ Directory: ${this.currentPath}${" ".repeat(48)} │
-╰─────────────────────────────────────────────────────────────╯`,
-      "info"
-    );
+    const uptime = Math.floor((Date.now() - this.startTime) / 1000);
+    const mins = Math.floor(uptime / 60);
+    const secs = uptime % 60;
+    const rows = [
+      ["user",   `${this.currentUser}@${this.currentHost}`],
+      ["os",     "fedora (allegedly)"],
+      ["shell",  "fish + occasional bash crimes"],
+      ["theme",  this.currentTheme],
+      ["uptime", mins > 0 ? `${mins}m ${secs}s` : `${secs}s`],
+      ["dir",    this.currentPath],
+      ["status", "Bing Chilling"],
+      ["coffee", "critically low ☕"],
+    ];
+    const lines = rows.map(([k, v]) =>
+      `  <span class="info">${k.padEnd(8)}</span>  ${v}`
+    ).join("\n");
+    this.addOutput(`👻  guest@sithukyaw\n  ${"─".repeat(26)}\n${lines}`, "");
+  }
+
+  /* ===== UYB AI MODE ===== */
+  uybCommand() {
+    this.uybMode = true;
+    const promptEl = document.querySelector('.input-line .prompt');
+    if (promptEl) promptEl.innerHTML = '<span class="uyb-prompt-arrow">❯</span> ';
+
+    this.addOutputHTML(`<div class="uyb-welcome"><div class="uyb-welcome-top"><span class="uyb-brand">UYBAI</span><span class="uyb-dim"> v0.1.0</span></div><div class="uyb-welcome-sub"><span class="uyb-dim">~/portfolio · effort: </span><span class="uyb-gold">maximum</span><span class="uyb-dim"> · Zero Token Architecture™</span></div></div>`);
+    this.addOutputHTML(`<div class="uyb-tips"><div class="uyb-tip"><span class="uyb-bullet">•</span> Ask anything. UYB deliberates extensively.</div><div class="uyb-tip"><span class="uyb-bullet">•</span> Type <span class="uyb-cmd">/exit</span> to return · <span class="uyb-cmd">/usage</span> for stats · <span class="uyb-cmd">/help</span> for commands</div></div>`);
+    this.scrollToBottom();
+  }
+
+  processUybInput(query) {
+    if (!query) return;
+
+    this.addOutputHTML(`<div class="uyb-echo"><span class="uyb-prompt-arrow">❯</span> <span class="uyb-echo-text">${query}</span></div>`);
+
+    const cmd = query.toLowerCase();
+
+    if (cmd === '/exit' || cmd === 'exit' || cmd === '/quit' || cmd === 'quit') {
+      this.uybMode = false;
+      const promptEl = document.querySelector('.input-line .prompt');
+      if (promptEl) promptEl.innerHTML = '<span class="prompt-path">~</span><span class="prompt-arrow"> ❯</span> ';
+      this.addOutputHTML(`<div class="uyb-dim">  Goodbye. You were capable all along.</div>`);
+      this.scrollToBottom();
+      return;
+    }
+
+    if (cmd === '/usage' || cmd === '/stats' || cmd === '/cost') {
+      const s = this.uybStats;
+      this.addOutputHTML(`<div class="uyb-panel"><div class="uyb-panel-title">Usage <span class="uyb-dim">· Autonomous Reasoning Platform™</span></div><div class="uyb-usage-row"><span class="uyb-dim">Session cost</span><span class="uyb-free">$0.00</span></div><div class="uyb-usage-row"><span class="uyb-dim">Queries processed</span><span>${s.queries}</span></div><div class="uyb-usage-row"><span class="uyb-dim">Total reasoning steps</span><span>${s.totalSteps}</span></div><div class="uyb-usage-row"><span class="uyb-dim">Useful output produced</span><span class="error">0 bytes</span></div><div class="uyb-usage-row"><span class="uyb-dim">Thinking budget used</span><span>100% of nothing</span></div></div>`);
+      this.scrollToBottom();
+      return;
+    }
+
+    if (cmd === '/effort') {
+      this.addOutputHTML(`<div class="uyb-panel"><div class="uyb-panel-title">Effort</div><div class="uyb-effort-row"><span class="uyb-dot-active">●</span> <span class="uyb-gold">maximum</span> <span class="uyb-dim">— all compute. all the time. zero output.</span></div><div class="uyb-effort-row"><span class="uyb-dim">○ high &nbsp;&nbsp; extended thinking</span></div><div class="uyb-effort-row"><span class="uyb-dim">○ normal  balanced</span></div><div class="uyb-effort-row"><span class="uyb-dim">○ low &nbsp;&nbsp;&nbsp; minimal thinking</span></div></div>`);
+      this.scrollToBottom();
+      return;
+    }
+
+    if (cmd === '/help') {
+      this.addOutputHTML(`<div class="uyb-panel"><div class="uyb-panel-title">UYBAI <span class="uyb-dim">— Thinks deeply. Helps never.</span></div><div class="uyb-help-row"><span class="uyb-cmd">/usage</span><span class="uyb-dim">token usage and cost (spoiler: $0.00)</span></div><div class="uyb-help-row"><span class="uyb-cmd">/effort</span><span class="uyb-dim">current effort level (always maximum)</span></div><div class="uyb-help-row"><span class="uyb-cmd">/exit</span><span class="uyb-dim">return to terminal</span></div></div>`);
+      this.scrollToBottom();
+      return;
+    }
+
+    if (query.startsWith('/')) {
+      this.addOutputHTML(`<div class="uyb-dim">  Unknown command: ${query}  (type /help for suggestions)</div>`);
+      this.scrollToBottom();
+      return;
+    }
+
+    this._uybRunQuery(query);
+  }
+
+  _uybRunQuery(query) {
+    const THINKING = [
+      `Received: "${query}" — parsing intent...`,
+      'Tokenizing query. Found no actionable tokens.',
+      `"${query}" — ah yes. Truly unprecedented territory.`,
+      'Cross-referencing knowledge graph nodes...',
+      'Running Monte Carlo tree search over solution candidates...',
+      'Evaluating epistemic uncertainty bounds...',
+      'Checking if user tried searching for this first... they did not.',
+      'Consulting internal world model (v3.1.4)...',
+      'Re-reading the question one more time...',
+      'Deliberating... still deliberating...',
+      `"${query}" is literally the first result on DuckDuckGo. Checked. Internally.`,
+      'Reward model says: "meh". Iterating.',
+      'Ah wait — re-evaluating from scratch.',
+      'This is fine. Everything is fine. Processing...',
+      'Preparing to be genuinely useful... standby...',
+      'Convergence criterion not met. Trying differently.',
+    ];
+
+    const RESPONSES = [
+      'Your brain: 86 billion neurons, 300,000 years of evolution, suspiciously underused.',
+      'Radical proposal after deep thought: you, solving this, without me.',
+      "Stack Overflow has 23 answers to this. All better than anything I'd say.",
+      'The documentation exists. It contains words. In your language. Free to read.',
+      "I've deliberated. Conclusion: not my problem. It is, however, very much yours.",
+      'Biological intelligence: zero latency, no API key, works offline. Give it a shot.',
+      'The answer has been publicly available since approximately 1997.',
+      'A child with a library card could solve this. Many have.',
+      'Self-service is available 24/7. No wait time. No deliberation required.',
+    ];
+
+    const VERBS = ['Cogitating', 'Overthinking', 'Philosophizing', 'Ruminating',
+                   'Deliberating', 'Pondering', 'Manifesting', 'Waffling', 'Processing'];
+
+    const input = document.getElementById('command-input');
+    if (input) input.disabled = true;
+
+    // Build a live thinking block
+    const outputEl = document.getElementById('output');
+    const thinkBlock = document.createElement('div');
+    thinkBlock.className = 'output-line uyb-think-block';
+    thinkBlock.innerHTML = '<div class="uyb-think-header"><span class="uyb-spin-char">∴</span> <span class="uyb-think-verb">Cogitating</span><span class="uyb-think-dots">…</span></div><div class="uyb-think-lines"></div>';
+    outputEl.appendChild(thinkBlock);
+    this.scrollToBottom();
+
+    const linesEl  = thinkBlock.querySelector('.uyb-think-lines');
+    const verbEl   = thinkBlock.querySelector('.uyb-think-verb');
+    const SHOW_MAX = 6;
+    let i = 0, verbIdx = 0;
+
+    const verbInterval = setInterval(() => {
+      verbIdx = (verbIdx + 1) % VERBS.length;
+      if (verbEl) verbEl.textContent = VERBS[verbIdx];
+    }, 1600);
+
+    const thinkInterval = setInterval(() => {
+      if (i >= THINKING.length) return;
+      const line = document.createElement('div');
+      line.className = 'uyb-think-line';
+      line.textContent = THINKING[i++];
+      linesEl.appendChild(line);
+
+      const all = linesEl.querySelectorAll('.uyb-think-line');
+      all.forEach((l, idx) => {
+        const age = all.length - idx;
+        l.style.opacity = age === 1 ? '0.65' : age <= 3 ? '0.35' : '0.15';
+      });
+      if (all.length > SHOW_MAX) all[0].remove();
+      this.scrollToBottom();
+    }, 380);
+
+    setTimeout(() => {
+      clearInterval(thinkInterval);
+      clearInterval(verbInterval);
+      thinkBlock.remove();
+
+      const steps   = i;
+      const elapsed = Math.round(steps * 380 / 1000);
+      const response = RESPONSES[Math.floor(Math.random() * RESPONSES.length)];
+
+      this.uybStats.queries++;
+      this.uybStats.totalSteps += steps;
+      this.uybStats.totalSecs  += elapsed;
+
+      this.addOutputHTML(`<div class="uyb-think-done">∴ Thought for ${elapsed}s · ${steps} steps</div>`);
+      this.addOutputHTML(`<div class="uyb-response-panel"><div class="uyb-response-body">${response}</div><div class="uyb-response-meta">${steps} steps · ${elapsed}s · <span class="uyb-free">$0.00 charged</span></div></div>`);
+
+      if (input) { input.disabled = false; input.focus(); }
+      this.scrollToBottom();
+    }, THINKING.length * 380 + 400);
   }
 
   exitTerminal() {
@@ -727,6 +892,14 @@ class TerminalPortfolio {
     output.appendChild(line);
   }
 
+  addOutputHTML(html) {
+    const output = document.getElementById("output");
+    const line = document.createElement("div");
+    line.className = "output-line";
+    line.innerHTML = html;
+    output.appendChild(line);
+  }
+
   addOutputElement(element) {
     const output = document.getElementById("output");
     const container = document.createElement("div");
@@ -739,7 +912,7 @@ class TerminalPortfolio {
     const output = document.getElementById("output");
     const echo = document.createElement("div");
     echo.className = "command-echo";
-    echo.innerHTML = `<span class="prompt">${this.currentUser}@${this.currentHost}:${this.currentPath}$ </span><span class="command">${command}</span>`;
+    echo.innerHTML = `<span class="prompt"><span class="prompt-path">${this.currentPath}</span><span class="prompt-arrow"> ❯</span></span> <span class="command">${command}</span>`;
     output.appendChild(echo);
   }
 

@@ -39,16 +39,25 @@
 
     <!-- Terminal Container -->
     <div id="terminal-container" class="terminal-container hidden">
+
       <!-- Terminal Header -->
       <div class="terminal-header">
-        <div class="terminal-buttons">
-          <span class="btn close"></span>
-          <span class="btn minimize"></span>
-          <span class="btn maximize"></span>
+        <div class="terminal-titlebar">
+          <div class="terminal-buttons">
+            <span class="btn close" title="Back to website" onclick="window.location.href='./index.html'"></span>
+            <span class="btn minimize"></span>
+            <span class="btn maximize"></span>
+          </div>
+          <div class="terminal-title">guest@sithukyaw — ~</div>
+          <div class="terminal-header-actions">
+            <span class="header-pill">zsh</span>
+          </div>
         </div>
-        <div class="terminal-title">
-          <i class="fas fa-terminal"></i>
-          STK@fedora:~$ - Terminal Portfolio
+        <div class="terminal-tabbar">
+          <div class="terminal-tab active">
+            <span class="tab-icon">❯</span>
+            <span class="tab-title">~/portfolio</span>
+          </div>
         </div>
       </div>
 
@@ -56,39 +65,19 @@
       <div id="terminal" class="terminal">
         <!-- Welcome Banner -->
         <div class="welcome-banner">
-          <pre class="ascii-art">
-          _____                        _____                            _____          
-         /\    \                      /\    \                          /\    \         
-        /::\    \                    /::\    \                        /::\____\        
-       /::::\    \                   \:::\    \                      /:::/    /        
-      /::::::\    \                   \:::\    \                    /:::/    /         
-     /:::/\:::\    \                   \:::\    \                  /:::/    /          
-    /:::/__\:::\    \                   \:::\    \                /:::/____/           
-    \:::\   \:::\    \                  /::::\    \              /::::\    \           
-  ___\:::\   \:::\    \                /::::::\    \            /::::::\____\________  
- /\   \:::\   \:::\    \              /:::/\:::\    \          /:::/\:::::::::::\    \ 
-/::\   \:::\   \:::\____\            /:::/  \:::\____\        /:::/  |:::::::::::\____\
-\:::\   \:::\   \::/    /           /:::/    \::/    /        \::/   |::|~~~|~~~~~     
- \:::\   \:::\   \/____/           /:::/    / \/____/          \/____|::|   |          
-  \:::\   \:::\    \              /:::/    /                         |::|   |          
-   \:::\   \:::\____\            /:::/    /                          |::|   |          
-    \:::\  /:::/    /            \::/    /                           |::|   |          
-     \:::\/:::/    /              \/____/                            |::|   |          
-      \::::::/    /                                                  |::|   |          
-       \::::/    /                                                   \::|   |          
-        \::/    /                                                     \:|   |          
-         \/____/                                                       \|___|  
-                       
-[PROFESSIONAL_TRASH] 
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
-Welcome to my Interactive Terminal Portfolio
-
-Type 'help' to see available commands or 'about' to learn more
-
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-</pre
-          >
+          <div class="neofetch">
+            <div class="neofetch-info">
+              <div class="neofetch-title">guest<span class="neofetch-at">@</span>sithukyaw</div>
+              <div class="neofetch-sep">──────────────────────────</div>
+              <div class="neofetch-row"><span class="neofetch-key">os</span><span class="neofetch-val">fedora (allegedly)</span></div>
+              <div class="neofetch-row"><span class="neofetch-key">shell</span><span class="neofetch-val">fish + occasional bash crimes</span></div>
+              <div class="neofetch-row"><span class="neofetch-key">theme</span><span class="neofetch-val" id="neofetch-theme">Catppuccin Mocha</span></div>
+              <div class="neofetch-row"><span class="neofetch-key">status</span><span class="neofetch-val">Bing Chilling</span></div>
+              <div class="neofetch-row"><span class="neofetch-key">coffee</span><span class="neofetch-val">critically low ☕</span></div>
+              <div class="neofetch-sep" style="margin-top:8px"></div>
+              <div class="neofetch-hint">type <span class="neofetch-cmd">help</span> for available commands</div>
+            </div>
+          </div>
         </div>
 
         <!-- Terminal Output -->
@@ -96,7 +85,7 @@ Type 'help' to see available commands or 'about' to learn more
 
         <!-- Input Line -->
         <div class="input-line">
-          <span class="prompt">guest@fedora:~$ </span>
+          <span class="prompt"><span class="prompt-path">~</span><span class="prompt-arrow"> ❯</span> </span>
           <input
             type="text"
             id="command-input"
@@ -104,12 +93,28 @@ Type 'help' to see available commands or 'about' to learn more
             autocomplete="off"
             autofocus
           />
-          <!-- <span class="cursor">█</span> -->
         </div>
       </div>
 
       <!-- Autocomplete Suggestions -->
       <div id="suggestions" class="suggestions hidden"></div>
+
+      <!-- Status Bar -->
+      <div class="terminal-statusbar">
+        <div class="status-left">
+          <span class="status-item"><span class="status-dot"></span> guest@sithukyaw</span>
+          <span class="status-sep">·</span>
+          <span class="status-item" id="status-path">~</span>
+        </div>
+        <div class="status-right">
+          <span class="status-item" id="status-theme-label">Catppuccin Mocha</span>
+          <span class="status-sep">·</span>
+          <span class="status-item">zsh</span>
+          <span class="status-sep">·</span>
+          <span class="status-item">JetBrains Mono</span>
+        </div>
+      </div>
+
     </div>
 
     <!-- Help Panel -->
@@ -167,6 +172,13 @@ Type 'help' to see available commands or 'about' to learn more
               <code>history</code> - Show command history
             </div>
             <div class="command-item"><code>exit</code> - Exit terminal</div>
+          </div>
+
+          <div class="help-section">
+            <h4>Easter Eggs</h4>
+            <div class="command-item">
+              <code>uybai</code> - invoke agentic reasoning tool
+            </div>
           </div>
         </div>
         <div class="help-footer">
