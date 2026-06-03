@@ -1,5 +1,12 @@
 [
   {
+    "slug": "agentic-rest-api",
+    "title": "Agentic in a nutshell",
+    "date": "2026-05-12",
+    "excerpt": "Turns out agentic is just a while loop with raw API calls.",
+    "tags": ["ai", "agents", "llm", "python"]
+  },
+  {
     "slug": "ai-guardrails",
     "title": "The Guardrail Industry need no no crab",
     "date": "2026-05-08",
@@ -10,14 +17,14 @@
     "slug": "l4-loadbalancer-benchmark",
     "title": "I Ran wrk Against Both My Load Balancers",
     "date": "2026-05-02",
-    "excerpt": "Benchmarked eBPF IPIP DSR vs iptables NAT. eBPF wins everything.",
+    "excerpt": "Benchmarked eBPF IPIP DSR vs iptables NAT.",
     "tags": ["networking", "ebpf", "iptables", "linux", "benchmark"]
   },
   {
     "slug": "l4-loadbalancer",
     "title": "I Built Two L4 Load Balancers Because One Wasn't Enough to Confuse Me",
     "date": "2026-04-14",
-    "excerpt": "Understanding K8s networking stuff.",
+    "excerpt": "networking",
     "tags": ["networking", "ebpf", "iptables", "linux"]
   }
 ]
