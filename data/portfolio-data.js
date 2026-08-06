@@ -12,8 +12,8 @@ window.PORTFOLIO_DATA = {
     status: "Bing Chilling",
     moodStatus: "ONLINE_AND_CONFUSED",
     coffeeLevel: "Dangerously low",
-    timezone: "Myanmar Time (UTC+6:30)",
-    email: "hello@sithukyaw.me",
+    timezone: "Thailand Time (UTC+7:00)",
+    email: "hello@sithukyaw.tech",
     social: {
       github: {
         url: "https://github.com/Sithukyaw666",
@@ -59,7 +59,18 @@ window.PORTFOLIO_DATA = {
       repo: "https://github.com/Sithukyaw666/watchtower",
       type: "fork",
       status: "live",
-      date: "2024-03",
+      date: "2025-03",
+    },
+    {
+      id: "lab-playground",
+      name: "Sixiaos Labs",
+      description:
+        "Just ephemeral playground sandboxes  for poking around and do stuff",
+      tech: ["Go", "gVisor", "sysbox", "containerd"],
+      url: "https://lab.sithukyaw.me",
+      type: "personal",
+      status: "live",
+      date: "2026-05",
     },
   ],
 
